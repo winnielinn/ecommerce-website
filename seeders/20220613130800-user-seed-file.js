@@ -13,7 +13,6 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date()
       },
-      // user
       {
         name: 'user1',
         email: 'user1@example.com',
@@ -26,9 +25,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Users', null, {
-      where: {},
-      truncate: { cascade: true }
-    })
+    await queryInterface.bulkDelete('Users', null, {})
   }
 }

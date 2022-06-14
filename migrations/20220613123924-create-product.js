@@ -18,9 +18,7 @@ module.exports = {
         reference: {
           model: 'Categories',
           keys: 'id'
-        },
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
+        }
       },
       price: {
         allowNull: false,
