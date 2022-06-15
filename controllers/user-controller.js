@@ -12,11 +12,22 @@ const userController = {
   register: async (req, res, next) => {
     try {
       const { name, email, password, confirmPassword } = req.body
-      if (!name || !email || !password || !confirmPassword) throw new Error('所有欄位都是必填。')
-      if (password !== confirmPassword) throw new Error('輸入的兩次密碼不相符。')
+
+      if (!name || !email || !password || !confirmPassword) {
+        req.flash('error_messages', '所有欄位都必須填寫。')
+        return res.redirect('back')
+      }
+
+      if (password !== confirmPassword) {
+        req.flash('error_messages', '密碼與確認密碼不符。')
+        return res.redirect('back')
+      }
 
       const user = await User.findOne({ where: { email } })
-      if (user) throw new Error('該使用者已經註冊過。')
+      if (user) {
+        req.flash('error_messages', '該使用者已經註冊過。')
+        return res.redirect('back')
+      }
 
       await User.create({
         name,
@@ -24,6 +35,7 @@ const userController = {
         password: await bcrypt.hashSync(password, bcrypt.genSaltSync(10))
       })
 
+      req.flash('success_messages', '您已成功註冊一個帳號。')
       return res.redirect('/user/login')
     } catch (err) {
       console.error(err)
