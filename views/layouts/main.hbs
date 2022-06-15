@@ -26,31 +26,41 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/">首頁</a>
               </li>
+
+              {{#ifCond user.role 'admin'}}
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin">管理者平台</a>
+                </li>
+              {{/ifCond}}
               {{#ifCond user.role 'user'}}
               <li class="nav-item">
-                <a class="nav-link" href="#">個人檔案</a>
+                <a class="nav-link" href="/user/profile">個人檔案</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">訂單查詢</a>
+                <a class="nav-link" href="/order">訂單查詢</a>
               </li>
               {{/ifCond}}
+
               {{#ifCond user.role 'admin'}}
+              {{else}}
               <li class="nav-item">
-                <a class="nav-link" href="#">所有使用者</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">所有訂單</a>
+                <a class="nav-link" href="/cart">購物車</a>
               </li>
               {{/ifCond}}
-               <li class="nav-item">
-                <a class="nav-link" href="#">購物車</a>
+
+              {{#if user}}
+              <li class="nav-item">
+                <a class="nav-link" href="/user/logout">登出</a>
               </li>
+              {{else}}
               <li class="nav-item">
                 <a class="nav-link" href="/user/login">登入</a>
               </li>
+              {{/if}}
             </ul>
         </div>
       </nav>

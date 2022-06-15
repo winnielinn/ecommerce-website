@@ -10,6 +10,13 @@ const userController = {
     req.flash('success_messages', '您已成功登入！')
     return res.redirect('/')
   },
+  logout: (req, res, next) => {
+    req.logout(function (err) {
+      if (err) return next(err)
+      req.flash('success_messages', '您已成功登出！')
+      res.redirect('/')
+    })
+  },
   getRegisterPage: (req, res) => {
     return res.render('register')
   },
