@@ -6,6 +6,10 @@ const userController = {
   getLoginPage: (req, res) => {
     return res.render('login')
   },
+  login: (req, res) => {
+    req.flash('success_messages', '您已成功登入！')
+    return res.redirect('/')
+  },
   getRegisterPage: (req, res) => {
     return res.render('register')
   },

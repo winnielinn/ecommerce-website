@@ -23,6 +23,8 @@
     "express-session": "^1.17.3",
     "method-override": "^3.0.0",
     "mysql2": "^2.3.3",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "sequelize": "^6.20.1",
     "sequelize-cli": "^6.4.1"
   },

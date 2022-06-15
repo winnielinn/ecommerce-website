@@ -4,6 +4,7 @@ const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
 
+const passport = require('./config/passport')
 const routes = require('./routes')
 
 if (process.env.NODE_ENV !== 'production') {
@@ -28,6 +29,9 @@ app.use(session({
   resave: true,
   saveUninitialized: false
 }))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // flash 提示訊息
 app.use(flash())
