@@ -29,7 +29,23 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/">首頁</a>
               </li>
+              {{#ifCond user.role 'user'}}
               <li class="nav-item">
+                <a class="nav-link" href="#">個人檔案</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">訂單查詢</a>
+              </li>
+              {{/ifCond}}
+              {{#ifCond user.role 'admin'}}
+              <li class="nav-item">
+                <a class="nav-link" href="#">所有使用者</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">所有訂單</a>
+              </li>
+              {{/ifCond}}
+               <li class="nav-item">
                 <a class="nav-link" href="#">購物車</a>
               </li>
               <li class="nav-item">

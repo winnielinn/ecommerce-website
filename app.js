@@ -1,11 +1,18 @@
 const express = require('express')
-const exphbs = require('express-handlebars').create({ defaultLayout: 'main', extname: '.hbs' })
+const handlebarsHelper = require('./helpers/handlerbars-helper')
+const exphbs = require('express-handlebars').create({
+  defaultLayout: 'main',
+  extname: '.hbs',
+  helpers: handlebarsHelper
+})
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
 
 const passport = require('./config/passport')
 const routes = require('./routes')
+
+const { getUser } = require('./helpers/auth-helper')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -36,6 +43,7 @@ app.use(passport.session())
 // flash 提示訊息
 app.use(flash())
 app.use((req, res, next) => {
+  res.locals.user = getUser(req)
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
   next()
