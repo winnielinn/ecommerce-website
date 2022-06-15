@@ -15,8 +15,9 @@
 
   <div class="container">
     <header> 
+      <div class="inner-header" style="border-bottom: 1px solid #6c757d;">
       <nav class="navbar navbar-expand-lg navbar-light my-2">
-        <div class="container-fluid">
+          <div class="container-fluid">
           <a class="navbar-brand" href="/">
             <img src="/photos/farmer.jpeg" width="150" height="150" alt="農夫">
           </a>
@@ -37,13 +38,14 @@
             </ul>
         </div>
       </nav>
+    </div>
     </header>
     
     {{> messages}}
     {{{ body }}}  
 
 
-    <section class="footer">
+    <footer>
       <div class="inner-footer p-5" style="border-top: 1px solid #6c757d;">
         <div class="nav-footer row justify-content-md-between">
           <div class="contact col-md-4 col-lg-3">
@@ -63,7 +65,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </footer>
   </div>
 
  
