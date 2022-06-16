@@ -1,4 +1,4 @@
-/* header */
+/* Header */
 .category-item {
   margin-top: 20px;
   color: #BC8A8A;
@@ -6,11 +6,20 @@
 
 .nav-pills .nav-link.active {
   background-color: #FFD2D2;
-  border-radius: 30%;
+  border-radius: 15%;
   color: #C73838;
 }
 
 .category-item:hover {
+  color: #C73838;
+}
+
+/* Product Panel */
+.product-name {
+  color: #BC8A8A;
+}
+
+.product-name:hover {
   color: #C73838;
 }
 

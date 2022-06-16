@@ -4,18 +4,18 @@
       <div class="card mb-4 shadow-sm">
         <a href="/products/{{this.id}}">
           <img
-            class="card-img-top img-fluid"
+            class="card-img-top"
             src="{{this.image}}"
             alt="Card image cap"
-            width="286px"
-            height="180px"
+            width="300px"
+            height="350px"
             style="transition: opacity 0.5s; opacity:0;"
             onload="this.style.opacity=1;"
           />
         </a>
         <div class="card-body">
           <p class="card-text">
-            <a href="/products/{{this.id}}">
+            <a class="text-decoration-none product-name" href="/products/{{this.id}}">
               {{this.name}}
             </a>
           </p>

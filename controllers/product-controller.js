@@ -15,8 +15,6 @@ const productController = {
   getAllProducts: async (req, res, next) => {
     const categoryId = Number(req.query.categoryId) || ''
 
-    console.log(categoryId)
-
     const [products, categories] = await Promise.all([
       await Product.findAll({
         included: Category,
