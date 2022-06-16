@@ -1,3 +1,12 @@
+/* header */
+.category-item {
+  margin-top: 20px;
+  color: #BC8A8A;
+}
+
+.category-item:hover {
+  color: #C73838;
+}
 
 /* Footer */
 footer a {

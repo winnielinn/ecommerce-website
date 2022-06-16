@@ -16,55 +16,70 @@
   <div class="container">
     <header> 
       <div class="inner-header" style="border-bottom: 1px solid #6c757d;">
-      <nav class="navbar navbar-expand-lg navbar-light my-2">
-          <div class="container-fluid">
-          <a class="navbar-brand" href="/">
-            <img src="/photos/farmer.jpeg" width="150" height="150" alt="農夫">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <nav class="navbar navbar-expand-lg navbar-light my-2">
+            <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+              <img src="/photos/farmer.jpeg" width="150" height="150" alt="農夫">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">首頁</a>
-              </li>
-
-              {{#ifCond user.role 'admin'}}
                 <li class="nav-item">
-                  <a class="nav-link" href="/admin">管理者平台</a>
+                  <a class="nav-link active" aria-current="page" href="/">首頁</a>
                 </li>
-              {{/ifCond}}
-              {{#ifCond user.role 'user'}}
-              <li class="nav-item">
-                <a class="nav-link" href="/user/profile">個人檔案</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/order">訂單查詢</a>
-              </li>
-              {{/ifCond}}
 
-              {{#ifCond user.role 'admin'}}
-              {{else}}
-              <li class="nav-item">
-                <a class="nav-link" href="/cart">購物車</a>
-              </li>
-              {{/ifCond}}
+                {{#ifCond user.role 'admin'}}
+                  <li class="nav-item">
+                    <a class="nav-link" href="/admin">管理者平台</a>
+                  </li>
+                {{/ifCond}}
+                {{#ifCond user.role 'user'}}
+                <li class="nav-item">
+                  <a class="nav-link" href="/user/profile">個人檔案</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/order">訂單查詢</a>
+                </li>
+                {{/ifCond}}
 
-              {{#if user}}
-              <li class="nav-item">
-                <a class="nav-link" href="/user/logout">登出</a>
-              </li>
-              {{else}}
-              <li class="nav-item">
-                <a class="nav-link" href="/user/login">登入</a>
-              </li>
-              {{/if}}
-            </ul>
-        </div>
-      </nav>
-    </div>
+                {{#ifCond user.role 'admin'}}
+                {{else}}
+                <li class="nav-item">
+                  <a class="nav-link" href="/cart">購物車</a>
+                </li>
+                {{/ifCond}}
+
+                {{#if user}}
+                <li class="nav-item">
+                  <a class="nav-link" href="/user/logout">登出</a>
+                </li>
+                {{else}}
+                <li class="nav-item">
+                  <a class="nav-link" href="/user/login">登入</a>
+                </li>
+                {{/if}}
+              </ul>
+          </div>
+        </nav>
+      </div>
+
+
+      {{#if categories}}
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link {{#ifCond '' categoryId}} active {{/ifCond}} category-item" href="?categoryId=">全部</a>
+        </li>
+        {{#each categories}}
+          <li class="nav-item">
+            <a class="nav-link {{#ifCond this.id ../categoryId}} active {{/ifCond}} category-item"
+              href="?categoryId={{this.id}}">{{this.name}}</a>
+          </li>
+        {{/each}}
+      {{/if}}
+      </ul>
     </header>
     
     {{> messages}}
