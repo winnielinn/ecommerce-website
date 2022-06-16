@@ -4,6 +4,12 @@
   color: #BC8A8A;
 }
 
+.nav-pills .nav-link.active {
+  background-color: #FFD2D2;
+  border-radius: 30%;
+  color: #C73838;
+}
+
 .category-item:hover {
   color: #C73838;
 }
