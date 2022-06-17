@@ -19,6 +19,10 @@
   color: #BC8A8A;
 }
 
+.fa-eye, .view-counts {
+  color: #8E8E8E
+}
+
 .product-name:hover {
   color: #C73838;
 }

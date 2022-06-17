@@ -19,7 +19,10 @@
               {{this.name}}
             </a>
           </p>
-          <p class="card-text text-truncate">$ {{this.price}}</p>
+          <div class="d-flex justify-content-between">
+            <p class="card-text text-truncate">$ {{this.price}}</p>
+            <i class="fa-solid fa-eye"><span class="view-counts m-1 fw-bolder">{{this.viewCounts}}</span></i>
+          </div>
         </div>
       </div>
     </div>
