@@ -3,11 +3,11 @@
     <img class="img-responsive center-block mb-5 d-flex" src="{{product.image}}" style="width: 500px; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;"/>
   </div>
 
-  {{!-- name/weight/price --}}
+  {{!-- name/weight/price/view --}}
   <div class="col-md-6">
-    <h1 class="product-title">{{product.name}}</h1>
+    <h1 class="product-title">{{product.name}}</h1> 
     <div class="product-box d-flex justify-content-between">
-      <span class="product-weight mt-3">400克/盒</span>
+      <span class="product-weight mt-3">{{product.weight}}</span>
       <p class="product-price mt-5" style="color: #FF5151;">$ {{product.price}}</p>
     </div>
 

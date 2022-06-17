@@ -24,6 +24,7 @@ module.exports = {
         quantity: Math.floor(Math.random() * 100),
         description: faker.lorem.sentence(),
         image: image[index],
+        weight: '600 克/盒',
         created_at: new Date(),
         updated_at: new Date()
       }))
