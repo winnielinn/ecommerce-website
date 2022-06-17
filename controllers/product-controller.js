@@ -28,6 +28,26 @@ const productController = {
     ])
 
     return res.render('products', { products, categories, categoryId })
+  },
+  getProduct: async (req, res, next) => {
+    const id = Number(req.params.id)
+
+    const [rawProduct, categories] = await Promise.all([
+      Product.findByPk(id),
+      Category.findAll({
+        raw: true
+      })
+    ])
+
+    const product = rawProduct.get({ plain: true })
+    const categoryId = product.CategoryId
+
+    if (!product) {
+      req.flash('error_messages', '無法查看不存在的產品。')
+      return res.redirect('back')
+    }
+
+    return res.render('product', { product, categories, categoryId })
   }
 }
 

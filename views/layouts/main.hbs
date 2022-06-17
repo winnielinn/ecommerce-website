@@ -70,12 +70,12 @@
       {{#if categories}}
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link {{#ifCond '' categoryId}} active {{/ifCond}} category-item" href="products?categoryId=">全部</a>
+          <a class="nav-link {{#ifCond '' categoryId}} active {{/ifCond}} category-item" href="/products?categoryId=">全部</a>
         </li>
         {{#each categories}}
           <li class="nav-item">
             <a class="nav-link {{#ifCond this.id ../categoryId}} active {{/ifCond}} category-item"
-              href="products?categoryId={{this.id}}">{{this.name}}</a>
+              href="/products?categoryId={{this.id}}">{{this.name}}</a>
           </li>
         {{/each}}
       {{/if}}

@@ -23,6 +23,10 @@
   color: #C73838;
 }
 
+.product-price {
+  font-size: 25px;
+}
+
 /* Footer */
 footer a {
   color: #BC8A8A;
