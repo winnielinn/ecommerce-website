@@ -1,0 +1,28 @@
+<div class="container mt-5">
+  <div class="row" style="width: 50%">
+    <form action="/users/setting/user/:id?_method=PUT" method="POST">
+      <div class="row g-4 align-items-center mt-0 m-5">
+        <div class="col-4">
+          <label class="form-label" for="name">名稱</label>
+        </div>
+        <div class="col-8">
+          <input class="form-control" id="name" type="text" name="name" class="form-control" placeholder="Name" value={{user.name}} required/>
+        </div>
+        <div class="col-4">
+          <label class="form-label" for="email">電子信箱</label>
+        </div>
+        <div class="col-8">
+          <input class="form-control" id="email" type="text" name="email" class="form-control" placeholder="Email" value={{user.email}} required/>
+        </div>
+      </div>
+      <div class="col m-5">
+        <button
+          class="btn btn-primary btn-block m-2"
+          style="background-color: #FF7575; border-color:#FF7575"
+          type="submit">修改
+        </button>
+        <a class="btn btn-outline-secondary" href="javascript:history.back()">返回上一頁</a>
+      </div>
+    </form>
+  </div>
+</div>

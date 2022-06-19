@@ -8,13 +8,15 @@ const userController = {
   },
   login: (req, res) => {
     req.flash('success_messages', '您已成功登入！')
-    return res.redirect('/')
+    return res.redirect('/home')
   },
   logout: (req, res, next) => {
     req.logout(function (err) {
-      if (err) return next(err)
+      if (err) {
+        console.error(err)
+      }
       req.flash('success_messages', '您已成功登出！')
-      res.redirect('/')
+      return res.redirect('/home')
     })
   },
   getRegisterPage: (req, res) => {
@@ -47,7 +49,14 @@ const userController = {
       })
 
       req.flash('success_messages', '您已成功註冊一個帳號。')
-      return res.redirect('/user/login')
+      return res.redirect('/users/login')
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  getSettingPage: async (req, res, next) => {
+    try {
+      return res.render('users/setting')
     } catch (err) {
       console.error(err)
     }

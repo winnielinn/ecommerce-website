@@ -38,7 +38,7 @@
                 {{/ifCond}}
                 {{#ifCond user.role 'user'}}
                 <li class="nav-item">
-                  <a class="nav-link" href="/user/profile">個人檔案</a>
+                  <a class="nav-link" href="/users/setting">個人資料</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/order">訂單查詢</a>
@@ -54,11 +54,11 @@
 
                 {{#if user}}
                 <li class="nav-item">
-                  <a class="nav-link" href="/user/logout">登出</a>
+                  <a class="nav-link" href="/users/logout">登出</a>
                 </li>
                 {{else}}
                 <li class="nav-item">
-                  <a class="nav-link" href="/user/login">登入</a>
+                  <a class="nav-link" href="/users/login">登入</a>
                 </li>
                 {{/if}}
               </ul>
