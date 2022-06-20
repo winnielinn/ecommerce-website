@@ -4,7 +4,7 @@ const authenticated = (req, res, next) => {
   if (ensureAuthenticated(req)) return next()
 
   req.flash('error_messages', '請先登入！')
-  return res.redirect('/user/login')
+  return res.redirect('/users/login')
 }
 
 const authenticatedAdmin = (req, res, next) => {
@@ -13,7 +13,7 @@ const authenticatedAdmin = (req, res, next) => {
     return res.redirect('/')
   }
 
-  return res.redirect('/user/login')
+  return res.redirect('/users/login')
 }
 
 module.exports = {
