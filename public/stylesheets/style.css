@@ -1,5 +1,5 @@
-/* Header */
-.category-item {
+/* header + tab */
+.category-item, .panel-item {
   margin-top: 20px;
   color: #BC8A8A;
 }
@@ -10,7 +10,7 @@
   color: #C73838;
 }
 
-.category-item:hover {
+.category-item, .panel-item:hover {
   color: #C73838;
 }
 
@@ -27,7 +27,7 @@
   color: #C73838;
 }
 
-.product-title {
+h1 {
   color: #4D4D4D;
 }
 

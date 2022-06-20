@@ -1,0 +1,36 @@
+<div class="row m-5">
+{{> admin-tabs route='products'}}
+
+  <table class="table table-hover mt-3">
+    <thead>
+      <tr class="table-secondary">
+        <th scope="col">商品名稱</th>
+        <th scope="col">商品分類</th>
+        <th scope="col">庫存數量</th>
+        <th scope="col">更多動作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each products}}
+      <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.Category.name}}</td>
+        <td>{{this.quantity}}</td>
+        <td>
+          <a class="btn btn-link link-warning text-decoration-none" href="/admin/products/{{this.id}}">
+              <i class="fa-solid fa-circle-info"></i>詳細資訊</a>
+          <a class="btn btn-link link-success text-decoration-none" href="/admin/products/{{this.id}}/edit">
+              <i
+                class="fas fa-edit"></i>編輯商品</a>
+        <form action="/admin/products/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-link link-danger text-decoration-none"
+              onclick="return confirm(`你確定要完全刪除 {{this.name}} 嗎？`)"><i
+                  class="fa fa-trash" aria-hidden="true"></i>刪除商品</button>
+              
+          </form>
+          </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

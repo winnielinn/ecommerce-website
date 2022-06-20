@@ -1,0 +1,15 @@
+<h1>管理者平台</h1>
+<ul class="nav nav-pills my-3">
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'products'}} active {{/ifCond}} panel-item" href="/admin/products">商品清單</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'users'}} active {{/ifCond}} panel-item" href="/admin/categories">分類清單</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'users'}} active {{/ifCond}} panel-item" href="/admin/users">使用者清單</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {{#ifCond route 'users'}} active {{/ifCond}} panel-item" href="/admin/orders">訂單清單</a>
+  </li>
+</ul>
