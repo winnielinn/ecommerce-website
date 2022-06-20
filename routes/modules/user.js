@@ -12,5 +12,6 @@ router.get('/setting', userController.getSettingPage)
 
 router.post('/register', userController.register)
 router.post('/login', passport.authenticate('local', { failureRedirect: '/users/login', failureFlash: true }), userController.login)
+router.put('/setting/user', userController.putSetting)
 
 module.exports = router

@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 
 const { User } = require('../models')
+const { getUser } = require('../helpers/auth-helper')
 
 const userController = {
   getLoginPage: (req, res) => {
@@ -57,6 +58,43 @@ const userController = {
   getSettingPage: async (req, res, next) => {
     try {
       return res.render('users/setting')
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  putSetting: async (req, res, next) => {
+    try {
+      const id = Number(getUser(req).id)
+      const { name, email } = req.body
+
+      if (!name || !email) {
+        req.flash('error_messages', '所有欄位都必須填寫。')
+        return res.redirect('back')
+      }
+
+      const user = await User.findByPk(id)
+
+      if (!user) {
+        req.flash('error_messages', '該使用者不存在。')
+        return res.redirect('back')
+      }
+
+      const rawUser = await User.findOne({ where: { email } })
+
+      if (rawUser) {
+        if (rawUser.get({ plain: true }).id !== id) {
+          req.flash('error_messages', '此電子信箱已經被其他使用者使用過。')
+          return res.redirect('back')
+        }
+      }
+
+      await user.update({
+        name,
+        email
+      })
+
+      req.flash('success_messages', '已成功修改個人資料。')
+      return res.redirect('/users/setting')
     } catch (err) {
       console.error(err)
     }
