@@ -1,0 +1,12 @@
+
+
+
+
+<div class="row mt-5">
+  <h1 class="text-center">修改商品資訊</h1>
+  <form action="/admin/products/{{product.id}}?_method=PUT" method="POST" enctype="multipart/form-data"
+      class="col-12 col-6 d-flex flex-column">
+    {{> product-form}} 
+  </form>
+
+</div>

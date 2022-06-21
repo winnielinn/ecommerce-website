@@ -6,8 +6,8 @@ const productController = {
       const categories = await Category.findAll({
         raw: true
       })
-
-      return res.render('home', { categories })
+      const category = true
+      return res.render('home', { categories, category })
     } catch (err) {
       console.error(err)
     }
@@ -27,7 +27,9 @@ const productController = {
       Category.findAll({ raw: true })
     ])
 
-    return res.render('products', { products, categories, categoryId })
+    const category = true
+
+    return res.render('products', { products, categories, categoryId, category })
   },
   getProduct: async (req, res, next) => {
     try {
@@ -49,8 +51,9 @@ const productController = {
 
       const product = rawProduct.get({ plain: true })
       const categoryId = product.CategoryId
+      const category = true
 
-      return res.render('product', { product, categories, categoryId })
+      return res.render('product', { product, categories, categoryId, category })
     } catch (err) {
       console.error(err)
     }
