@@ -1,0 +1,36 @@
+<div class="row m-5">
+  <div class="col-md-6">
+    <img
+      class="img-responsive center-block mb-5 d-flex"
+      src="{{product.image}}"
+      style="width: 500px; transition: opacity 0.5s; opacity:0;"
+      onload="this.style.opacity=1;"
+    />
+  </div>
+  
+  <div class="col-md-6">
+    <div class="col-md-12 d-flex align-items-center">
+      <h1>{{product.name}}</h1>
+      <span class="ms-3"> [{{product.Category.name}}] </span>
+    </div>
+
+    <div class="well">
+      <ul class="list-unstyled">
+        <li class="m-2"><strong>價錢:</strong> ${{product.price}}</li>
+        <li class="m-2"><strong>重量：:</strong> {{product.weight}}</li>
+        <li class="m-2"><strong>庫存數量:</strong> {{product.quantity}}</li>
+        <li class="m-2"><strong>產品描述:</strong> {{product.description}}</li>
+      </ul>
+    </div>
+
+    <a class="btn btn-link link-success text-decoration-none" href="/admin/products/{{product.id}}/edit">
+      <i class="fas fa-edit"></i> 編輯商品
+    </a>
+    <form action="/admin/products/{{product.id}}?_method=DELETE" method="POST" style="display: inline;">
+      <button type="submit" class="btn btn-link link-danger text-decoration-none"
+        onclick="return confirm(`你確定要完全刪除 {{product.name}} 嗎？`)"><i
+            class="fa fa-trash" aria-hidden="true"></i> 刪除商品</button>
+    </form>
+    <a class="btn btn-outline-secondary" href="javascript:history.back()">返回上一頁</a>
+  </div>
+</div>
