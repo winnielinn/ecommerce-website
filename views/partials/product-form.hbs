@@ -1,10 +1,10 @@
 <div class="row g-2 align-items-center mt-0 m-3">
   <div class="mb-3">
-    <label for="name" class="form-label">名稱</label>
+    <label for="name" class="form-label">名稱 <span style="color: #e83e8c;">*</span></label>
     <input type="text" class="form-control" id="name" name="name" placeholder="小草蝦" value="{{product.name}}" required>
   </div>
   <div class="mb-3">
-    <label for="categoryId" class="mb-1">分類</label>
+    <label for="categoryId" class="mb-1">分類 <span style="color: #e83e8c;">*</span></label>
     <select class="form-control" id="categoryId" name="categoryId" required>
       <option value="category" disabled selected>請選擇一個分類</option>
       {{#each categories}}
@@ -14,22 +14,26 @@
   </select>
   </div>
   <div class="mb-3">
-    <label for="price" class="form-label">價錢</label>
+    <label for="price" class="form-label">價錢 <span style="color: #e83e8c;">*</span></label>
     <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
     maxlength="10" class="form-control" id="price" name="price" placeholder="800" value="{{product.price}}" required>
   </div>
   <div class="mb-3">
-    <label for="quantity" class="form-label">數量</label>
-    <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-    maxlength="10" class="form-control" id="quantity" name="quantity" placeholder="30" value="{{product.quantity}}" required>
+    <label for="weight" class="form-label">重量 <span style="color: #e83e8c;">*</span></label>
+    <input type="text"class="form-control" id="weight" name="weight" placeholder="600 斤/袋" value="{{product.weight}}" required>
   </div>
   <div class="mb-3">
-    <label class="form-label" for="image">Image</label>
+    <label for="quantity" class="form-label">庫存數量</label>
+    <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+    maxlength="10" class="form-control" id="quantity" name="quantity" placeholder="30" value="{{product.quantity}}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="image">產品照片</label>
     <input class="form-control" type="file" class="form-control-file" id="image" name="image" value="{{product.image}}">
   </div>
   <div class="mb-3">
     <label for="description" class="form-label">商品描述</label>
-    <textarea class="form-control" id="description" rows="3" maxlength="200" name="description" placeholder="好吃的小草蝦" required>{{product.description}}</textarea>
+    <textarea class="form-control" id="description" rows="3" maxlength="200" name="description" placeholder="好吃的小草蝦">{{product.description}}</textarea>
   </div>
   <div class="d-grid gap-2 d-md-block mb-3">
     <button type="submit" class="btn btn-primary">提交</button>

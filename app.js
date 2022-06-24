@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const handlebarsHelper = require('./helpers/handlerbars-helper')
 const exphbs = require('express-handlebars').create({
@@ -42,6 +43,8 @@ app.use(passport.session())
 
 // flash 提示訊息
 app.use(flash())
+
+app.use('/upload', express.static(path.join(__dirname, 'upload')))
 app.use((req, res, next) => {
   res.locals.user = getUser(req)
   res.locals.success_messages = req.flash('success_messages')

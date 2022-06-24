@@ -1,5 +1,7 @@
 const { Product, Category } = require('../models')
 
+const { localFileHandler } = require('../helpers/file-helper')
+
 const adminController = {
   getAllProducts: async (req, res, next) => {
     try {
@@ -40,6 +42,35 @@ const adminController = {
         raw: true
       })
       res.render('admin/create-product', { categories })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  postProduct: async (req, res, next) => {
+    try {
+      const { name, categoryId, price, weight, quantity, description } = req.body
+
+      if (!name || !categoryId || !price || !weight) {
+        req.flash('error_messages', '* 為必填欄位。')
+        return res.redirect('back')
+      }
+
+      const { file } = req
+      const filePath = await localFileHandler(file)
+      console.log()
+
+      await Product.create({
+        name,
+        CategoryId: categoryId,
+        price,
+        weight,
+        quantity,
+        image: filePath || null,
+        description
+      })
+
+      req.flash('success_messages', `${name} 已經新增成功。`)
+      return res.redirect('/admin/products')
     } catch (err) {
       console.error(err)
     }
