@@ -12,6 +12,7 @@ router.get('/products', adminController.getAllProducts)
 
 router.post('/products', upload.single('image'), adminController.postProduct)
 router.put('/products/:id', upload.single('image'), adminController.editProduct)
+router.delete('/products/:id', adminController.deleteProduct)
 
 router.get('/', (req, res) => res.redirect('/admin/products'))
 

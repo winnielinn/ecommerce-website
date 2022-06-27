@@ -134,6 +134,25 @@ const adminController = {
     } catch (err) {
       console.error(err)
     }
+  },
+  deleteProduct: async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const product = await Product.destroy({
+        where: {
+          id
+        }
+      })
+
+      if (!product) {
+        req.flash('error_messages', '無法刪除不存在的產品。')
+        return res.redirect('back')
+      }
+      req.flash('success_messages', '已成功刪除一項產品。')
+      return res.redirect('/admin/products')
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
