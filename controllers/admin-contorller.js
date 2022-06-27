@@ -1,6 +1,6 @@
 const { Product, Category } = require('../models')
 
-const { localFileHandler } = require('../helpers/file-helper')
+const { imgurFileHandler } = require('../helpers/file-helper')
 
 const adminController = {
   getAllProducts: async (req, res, next) => {
@@ -56,8 +56,7 @@ const adminController = {
       }
 
       const { file } = req
-      const filePath = await localFileHandler(file)
-      console.log()
+      const filePath = await imgurFileHandler(file)
 
       await Product.create({
         name,
