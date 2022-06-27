@@ -97,6 +97,43 @@ const adminController = {
     } catch (err) {
       console.error(err)
     }
+  },
+  editProduct: async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const { file } = req
+      const { name, categoryId, price, weight, quantity, description } = req.body
+
+      if (!name || !categoryId || !price || !weight) {
+        req.flash('error_messages', '* 為必填欄位。')
+        return res.redirect('back')
+      }
+
+      const [product, filePath] = await Promise.all([
+        Product.findByPk(id),
+        imgurFileHandler(file)
+      ])
+
+      if (!product) {
+        req.flash('error_messages', '無法編輯不存在的產品。')
+        return res.redirect('back')
+      }
+
+      await product.update({
+        name,
+        CategoryId: categoryId,
+        price,
+        weight,
+        quantity,
+        image: filePath || product.image,
+        description
+      })
+
+      req.flash('success_messages', `${name} 已經被修改成功。`)
+      return res.redirect('/admin/products')
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
