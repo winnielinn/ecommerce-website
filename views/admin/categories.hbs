@@ -1,8 +1,8 @@
-<div class="row m-5">
+<div class="m-5">
 {{> admin-tabs route='categories'}}
 
 {{#if editCategory}}
-  <div class="d-flex align-items-center pt-3 pb-5 text-white-50 bg-purple">
+  <div class="d-flex align-items-center pb-5 text-white-50 bg-purple">
     <form class="row" action="/admin/categories/{{editCategory.id}}?_method=PUT" method="POST">
       <div class="col-auto">
         <input class="form-control" type="text" placeholder="農作物" name="name" value="{{editCategory.name}}">
