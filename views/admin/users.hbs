@@ -1,0 +1,13 @@
+<div class="m-5">
+{{> admin-tabs route='users'}}
+
+  {{#each users}}
+  <div class="card mt-3">
+    <h5 class="card-header">{{this.name}}</h5>
+    <div class="card-body">
+      <p class="card-title">電子信箱：{{this.email}}</p>
+      <p class="card-text">訂購次數： {{this.orderTimes}}</p>
+    </div>
+  </div>
+  {{/each}}
+</div>

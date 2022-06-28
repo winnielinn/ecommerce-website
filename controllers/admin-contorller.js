@@ -1,4 +1,5 @@
-const { Product, Category } = require('../models')
+const { Product, Category, User } = require('../models')
+const { Op } = require('sequelize')
 
 const { imgurFileHandler } = require('../helpers/file-helper')
 
@@ -150,6 +151,22 @@ const adminController = {
       }
       req.flash('success_messages', '已成功刪除一項產品。')
       return res.redirect('/admin/products')
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  getUsersPage: async (req, res, next) => {
+    try {
+      const users = await User.findAll({
+        where: {
+          role: {
+            [Op.eq]: ['user']
+          }
+        },
+        order: [['order_times', 'DESC']],
+        raw: true
+      })
+      res.render('admin/users', { users })
     } catch (err) {
       console.error(err)
     }

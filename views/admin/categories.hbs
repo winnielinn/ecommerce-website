@@ -2,55 +2,55 @@
 {{> admin-tabs route='categories'}}
 
 {{#if editCategory}}
-<div class="d-flex align-items-center pt-3 pb-5 text-white-50 bg-purple">
-  <form class="row" action="/admin/categories/{{editCategory.id}}?_method=PUT" method="POST">
-    <div class="col-auto">
-      <input class="form-control" type="text" placeholder="農作物" name="name" value="{{editCategory.name}}">
-    </div>
-    <div class="col-auto">
-      <button class="btn btn-outline-success" type="submit">確認編輯</button>
-      <a class="btn btn-link link-secondary text-decoration-none" href="/admin/categories">創建一個新的分類</a>
-    </div>
-  </form>>
-</div>
+  <div class="d-flex align-items-center pt-3 pb-5 text-white-50 bg-purple">
+    <form class="row" action="/admin/categories/{{editCategory.id}}?_method=PUT" method="POST">
+      <div class="col-auto">
+        <input class="form-control" type="text" placeholder="農作物" name="name" value="{{editCategory.name}}">
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-outline-success" type="submit">確認編輯</button>
+        <a class="btn btn-link link-secondary text-decoration-none" href="/admin/categories">創建一個新的分類</a>
+      </div>
+    </form>>
+  </div>
 {{else}}
 	<div class="d-flex align-items-center pt-3 pb-5 text-white-50 bg-purple">
-  <form class="row" action="/admin/categories" method="POST">
-    <div class="col-auto">
-      <input class="form-control" type="text" placeholder="農作物" name="name">
-    </div>
-    <div class="col-auto">
-      <button class="btn btn-outline-dark" type="submit">新增分類</button>
-    </div>
-  </form>
-</div>
+    <form class="row" action="/admin/categories" method="POST">
+      <div class="col-auto">
+        <input class="form-control" type="text" placeholder="農作物" name="name">
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-outline-dark" type="submit">新增分類</button>
+      </div>
+    </form>
+  </div>
 {{/if}}
 
-<table class="table table-hover">
-  <thead>
-    <tr class="table-secondary">
-      <th scope="col">編號</th>
-      <th scope="col">分類名稱</th>
-      <th scope="col">更多動作</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each categories}}
-    <tr>
-      <td>{{this.id}}</td>
-      <td>{{this.name}}</td>
-      <td>
+  <table class="table table-hover">
+    <thead>
+      <tr class="table-secondary">
+        <th scope="col">編號</th>
+        <th scope="col">分類名稱</th>
+        <th scope="col">更多動作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each categories}}
+      <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.name}}</td>
+        <td>
 
-        <a class="btn btn-link link-success text-decoration-none" href="/admin/categories/{{this.id}}">
-            <i class="fas fa-edit"></i> 編輯分類</a>
-      <form action="/admin/categories/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link link-danger text-decoration-none"
-            onclick="return confirm(`你確定要完全刪除 {{this.name}} 嗎？`)"><i
-                class="fa fa-trash" aria-hidden="true"></i> 刪除分類</button>
-        </form>
-        </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+          <a class="btn btn-link link-success text-decoration-none" href="/admin/categories/{{this.id}}">
+              <i class="fas fa-edit"></i> 編輯分類</a>
+        <form action="/admin/categories/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-link link-danger text-decoration-none"
+              onclick="return confirm(`你確定要完全刪除 {{this.name}} 嗎？`)"><i
+                  class="fa fa-trash" aria-hidden="true"></i> 刪除分類</button>
+          </form>
+          </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>
