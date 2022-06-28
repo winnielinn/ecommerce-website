@@ -68,7 +68,7 @@ const adminController = {
         description
       })
 
-      req.flash('success_messages', `${name} 已經新增成功。`)
+      req.flash('success_messages', `已經成功新增 ${name} 這個商品。`)
       return res.redirect('/admin/products')
     } catch (err) {
       console.error(err)
@@ -129,7 +129,7 @@ const adminController = {
         description
       })
 
-      req.flash('success_messages', `${name} 已經被修改成功。`)
+      req.flash('success_messages', `該商品 ${name} 已經被修改成功。`)
       return res.redirect('/admin/products')
     } catch (err) {
       console.error(err)
