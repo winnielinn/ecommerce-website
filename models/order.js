@@ -1,4 +1,5 @@
 'use strict'
+
 const {
   Model
 } = require('sequelize')
@@ -17,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Order.init({
     name: DataTypes.STRING,
-    UserId: DataTypes.INTEGER,
+    User_id: DataTypes.INTEGER,
     phone: DataTypes.STRING,
     address: DataTypes.TEXT,
     payment_status: DataTypes.STRING,
