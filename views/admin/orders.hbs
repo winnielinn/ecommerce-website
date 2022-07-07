@@ -1,0 +1,38 @@
+<div class="m-5">
+  {{> admin-tabs route="orders"}}
+
+
+    <table class="table table-hover">
+    <thead>
+      <tr class="table-secondary">
+        <th scope="col">編號</th>
+        <th scope="col">使用者編號</th>
+        <th scope="col">總金額</th>
+        <th scope="col">付款狀態</th>
+        <th scope="col">運送狀態</th>
+        <th scope="col">更多動作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders}}
+      <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.UserId}}</td>
+        <td>{{this.totalAmount}}</td>
+        <td>{{this.paymentStatus}}</td>
+        <td>{{this.shippingStatus}}</td>
+        <td>
+
+          <a class="btn btn-link link-success text-decoration-none" href="/admin/orders/{{this.id}}">
+              <i class="fas fa-edit"></i> 編輯狀態</a>
+        <form action="/admin/orders/{{this.id}}" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-link link-danger text-decoration-none"
+              onclick="return confirm(`你確定要取消這筆訂單嗎？`)"><i
+                  class="fa fa-trash" aria-hidden="true"></i> 取消訂單</button>
+          </form>
+          </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

@@ -5,6 +5,7 @@ const upload = require('../../middleware/mutler')
 
 const adminController = require('../../controllers/admin-contorller')
 const categoryController = require('../../controllers/category-controller')
+const orderController = require('../../controllers/order-controller')
 
 // products
 router.get('/products/create', adminController.getCreatePage)
@@ -24,6 +25,9 @@ router.get('/categories', categoryController.getCategoriesPage)
 router.put('/categories/:id', categoryController.putCategory)
 router.post('/categories', categoryController.postCategory)
 router.delete('/categories/:id', categoryController.deleteCategory)
+
+// orders
+router.get('/orders', orderController.getOrdersPage)
 
 router.get('/', (req, res) => res.redirect('/admin/products'))
 
