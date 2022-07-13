@@ -1,5 +1,4 @@
-const { Product, Category, User } = require('../models')
-const { Op } = require('sequelize')
+const { Product, Category, User, Order } = require('../models')
 
 const { imgurFileHandler } = require('../helpers/file-helper')
 
@@ -149,6 +148,7 @@ const adminController = {
         req.flash('error_messages', '無法刪除不存在的產品。')
         return res.redirect('back')
       }
+
       req.flash('success_messages', '已成功刪除一項產品。')
       return res.redirect('/admin/products')
     } catch (err) {
@@ -159,14 +159,43 @@ const adminController = {
     try {
       const users = await User.findAll({
         where: {
-          role: {
-            [Op.eq]: ['user']
-          }
+          role: 'user'
         },
         order: [['order_times', 'DESC']],
         raw: true
       })
       res.render('admin/users', { users })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  getOrdersPage: async (req, res, next) => {
+    try {
+      const orders = await Order.findAll({
+        raw: true
+      })
+      res.render('admin/orders', { orders })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  cancelOrder: async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const order = await Order.findByPk(id)
+
+      if (!order) {
+        req.flash('error_messages', '無法取消不存在的訂單。')
+        return res.redirect('back')
+      }
+
+      await order.update({
+        paymentStatus: 'cancelled',
+        shippingStatus: 'cancelled'
+      })
+
+      req.flash('success_messages', `已成功取消訂單編號 ${id}`)
+      return res.redirect('/admin/orders')
     } catch (err) {
       console.error(err)
     }

@@ -25,7 +25,7 @@
 
           <a class="btn btn-link link-success text-decoration-none" href="/admin/orders/{{this.id}}">
               <i class="fas fa-edit"></i> 編輯狀態</a>
-        <form action="/admin/orders/{{this.id}}" method="POST" style="display: inline;">
+        <form action="/admin/orders/{{this.id}}/cancel" method="POST" style="display: inline;">
             <button type="submit" class="btn btn-link link-danger text-decoration-none"
               onclick="return confirm(`你確定要取消這筆訂單嗎？`)"><i
                   class="fa fa-trash" aria-hidden="true"></i> 取消訂單</button>
