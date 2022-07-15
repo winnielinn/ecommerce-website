@@ -1,0 +1,68 @@
+<div class="m-5">
+  {{> admin-tabs route="orders"}}
+
+  <table class="table table">
+    <thead>
+      <tr class="table-secondary">
+        <th scope="col"></th>
+        <th scope="col">產品名稱</th>
+        <th scope="col">產品數量</th>
+        <th scope="col">產品金額</th>
+        <th scope="col">小計</th>
+      </tr>
+    </thead>
+    <tbody class="order-t">
+      {{#each order.orderedProducts}}
+      <tr>
+        <td><img src="{{this.image}}" alt="產品照片" 
+          width="150px"
+          height="100px"
+          style="transition: opacity 0.5s; opacity:0;"
+          onload="this.style.opacity=1;"></td>
+        <td>{{this.name}}</td>
+        <td>{{this.OrderItem.quantity}}</td>
+        <td>{{this.price}}</td>
+        <td>$ {{this.price}} * {{this.OrderItem.quantity}}</td>
+      </tr>
+      {{/each}}
+      <tr>
+        <td></td>
+        <td></td>
+        <td class="total"></td>
+        <td>
+          <h6 class="m-0">總計</h6>
+        </td>
+        <td>
+          <h6 class="m-0">$ {{totalPrice}}</h6>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <form action="/admin/orders/{{order.id}}?_method=PUT" method="POST" class="mt-5">
+    <div class="status-container row d-flex justify-content-end align-items-end">
+      <div class="select-group col-2">
+        <label for="payment">付款狀態</label>
+        <select name="payment" id="payment" class="form-select" {{#ifCond order.paymentStatus 'cancelled' }} value="cancelled"
+          disabled {{/ifCond}}>
+          <option value="paid" {{#ifCond order.paymentStatus 'paid' }} selected {{/ifCond}}>已付款</option>
+          <option value="unpaid" {{#ifCond order.paymentStatus 'unpaid' }} selected {{/ifCond}}>尚未付款</option>
+          <option value="cancelled" {{#ifCond order.paymentStatus 'cancelled' }} selected {{/ifCond}}>已取消
+          </option>
+        </select>
+      </div>
+      <div class="select-group col-2">
+        <label for="shipment">運送狀態</label>
+        <select name="shipment" id="shipment" class="form-select" {{#ifCond order.shippingStatus 'cancelled' }} value="cancelled"
+          disabled {{/ifCond}}>
+          <option value="shipped" {{#ifCond order.shippingStatus 'shipped' }}selected{{/ifCond}}>已配送</option>
+          <option value="processing" {{#ifCond order.shippingStatus 'processing' }}selected{{/ifCond}}>處理中</option>
+          <option value="cancelled" {{#ifCond order.shippingStatus 'cancelled' }} selected {{/ifCond}}>已取消
+          </option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-outline-dark col-1" {{#ifCond order.paymentStatus 'cancelled' }} disabled
+        {{/ifCond}}>更改狀態</button>
+    </div>
+  </form>
+</div>

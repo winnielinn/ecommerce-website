@@ -199,6 +199,33 @@ const adminController = {
     } catch (err) {
       console.error(err)
     }
+  },
+  getOrderPage: async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const rawOrder = await Order.findByPk(id, {
+        include: [
+          { model: Product, as: 'orderedProducts', attributes: ['id', 'name', 'price', 'quantity', 'image'] }
+        ]
+      })
+
+      if (!rawOrder) {
+        req.flash('error_messages', '無法查找不存在的訂單。')
+        return res.redirect('back')
+      }
+
+      const order = rawOrder.get({ plain: true })
+
+      let totalPrice = 0
+
+      order.orderedProducts.forEach((item, index) => (
+        totalPrice += item.price * item.OrderItem.quantity
+      ))
+
+      return res.render('admin/order', { order, totalPrice })
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 

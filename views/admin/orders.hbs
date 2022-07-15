@@ -19,16 +19,23 @@
         <td>{{this.id}}</td>
         <td>{{this.UserId}}</td>
         <td>{{this.totalAmount}}</td>
-        <td>{{this.paymentStatus}}</td>
-        <td>{{this.shippingStatus}}</td>
+        <td>  
+          {{#ifCond this.paymentStatus 'paid' }} 已付款 {{/ifCond}}
+          {{#ifCond this.paymentStatus 'unpaid' }} 尚未付款 {{/ifCond}}
+          {{#ifCond this.paymentStatus 'cancelled' }} 已取消 {{/ifCond}}
+        </td>
         <td>
-
+          {{#ifCond this.shippingStatus 'shipped' }} 已配送 {{/ifCond}}
+          {{#ifCond this.shippingStatus 'processing' }} 處理中 {{/ifCond}}
+          {{#ifCond this.shippingStatus 'cancelled' }} 已取消 {{/ifCond}}
+        </td>
+        <td>
           <a class="btn btn-link link-success text-decoration-none" href="/admin/orders/{{this.id}}">
-              <i class="fas fa-edit"></i> 編輯狀態</a>
+              <i class="fas fa-edit"></i>編輯狀態</a>
         <form action="/admin/orders/{{this.id}}/cancel" method="POST" style="display: inline;">
             <button type="submit" class="btn btn-link link-danger text-decoration-none"
               onclick="return confirm(`你確定要取消這筆訂單嗎？`)"><i
-                  class="fa fa-trash" aria-hidden="true"></i> 取消訂單</button>
+                  class="fa fa-trash" aria-hidden="true"></i>取消訂單</button>
           </form>
           </td>
       </tr>
