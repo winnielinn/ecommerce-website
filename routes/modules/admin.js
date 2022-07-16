@@ -28,6 +28,7 @@ router.delete('/categories/:id', categoryController.deleteCategory)
 // orders
 router.get('/orders', adminController.getOrdersPage)
 router.get('/orders/:id', adminController.getOrderPage)
+router.put('/orders/:id', adminController.putOrder)
 router.post('/orders/:id/cancel', adminController.cancelOrder)
 
 router.get('/', (req, res) => res.redirect('/admin/products'))

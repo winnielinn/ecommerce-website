@@ -226,6 +226,34 @@ const adminController = {
     } catch (err) {
       console.error(err)
     }
+  },
+  putOrder: async (req, res, next) => {
+    try {
+      const id = req.params.id
+      const { payment, shipment } = req.body
+
+      if (!payment || !shipment) {
+        req.flash('error_messages', '付款狀態或是運送狀態需要被選取。')
+        return res.redirect('back')
+      }
+
+      const order = await Order.findByPk(id)
+
+      if (!order) {
+        req.flash('error_messages', '無法更改不存在的訂單。')
+        return res.redirect('back')
+      }
+
+      await order.update({
+        paymentStatus: payment,
+        shippingStatus: shipment
+      })
+
+      req.flash('success_messages', '已成功更改付款狀態及運送狀態。')
+      return res.redirect(`/admin/orders/${id}`)
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
