@@ -1,6 +1,6 @@
 'use strict'
 
-const { faker } = require('@faker-js/faker/locale/zh_TW')
+const { faker } = require('@faker-js/faker')
 
 const { createImage } = require('../utils/unsplash-image')
 
