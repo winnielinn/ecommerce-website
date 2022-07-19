@@ -2,7 +2,7 @@
 
 const { User } = require('../models')
 
-const { faker } = require('@faker-js/faker')
+const faker = require('faker')
 
 module.exports = {
   async up (queryInterface, Sequelize) {

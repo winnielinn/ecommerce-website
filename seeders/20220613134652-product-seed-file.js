@@ -1,6 +1,6 @@
 'use strict'
 
-const { faker } = require('@faker-js/faker')
+const faker = require('faker')
 
 const { createImage } = require('../utils/unsplash-image')
 
@@ -18,7 +18,7 @@ module.exports = {
 
     await queryInterface.bulkInsert('Products',
       Array.from({ length: PRODUCT_AMOUNT }).map((_item, index) => ({
-        name: faker.word.noun(),
+        name: faker.lorem.word(),
         Category_id: categories[Math.floor(Math.random() * length)].id,
         price: 500 + 50 * (Math.floor(Math.random() * 10)),
         quantity: Math.floor(Math.random() * 100),
