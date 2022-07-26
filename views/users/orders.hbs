@@ -1,0 +1,45 @@
+<div class="m-5">
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="table-secondary" scope="col">訂單編號</th>
+        <th class="table-secondary" scope="col">日期</th>
+        <th class="table-secondary" scope="col">總金額</th>
+        <th class="table-secondary" scope="col">付款狀態</th>
+        <th class="table-secondary" scope="col">出貨狀態</th>
+        <th class="table-secondary" scope="col">訂單狀態</th>
+        <th class="table-secondary" scope="col">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders}}
+      <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.date}}</td>
+        <td>{{this.totalAmount}}</td>
+        <td>  
+          {{#ifCond this.paymentStatus 'paid' }} 已付款 {{/ifCond}}
+          {{#ifCond this.paymentStatus 'unpaid' }} 尚未付款 {{/ifCond}}
+          {{#ifCond this.paymentStatus 'cancelled' }} 已取消 {{/ifCond}}
+        </td>
+        <td>
+          {{#ifCond this.shippingStatus 'shipped' }} 已配送 {{/ifCond}}
+          {{#ifCond this.shippingStatus 'processing' }} 處理中 {{/ifCond}}
+          {{#ifCond this.shippingStatus 'cancelled' }} 已取消 {{/ifCond}}
+        </td>
+        <td>
+          {{#ifCond this.shippingStatus 'cancelled'}}
+            訂單取消
+          {{/ifCond}}
+          {{#ifCond this.shippingStatus 'processing' }}  
+          <form action="/orders/{{this.id}}/cancel" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-outline-danger">取消訂單</button>
+          </form> 
+          {{/ifCond}}
+        </td>
+        <td><a class="btn btn-primary" href="/orders/{{this.id}}" role="button">查看訂單</a></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
