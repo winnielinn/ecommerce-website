@@ -35,21 +35,21 @@ const productController = {
     try {
       const id = Number(req.params.id)
 
-      const [rawProduct, categories] = await Promise.all([
+      let [product, categories] = await Promise.all([
         Product.findByPk(id),
         Category.findAll({
           raw: true
         })
       ])
 
-      if (!rawProduct) {
+      if (!product) {
         req.flash('error_messages', '無法查看不存在的產品。')
         return res.redirect('back')
       }
 
-      await rawProduct.increment('view_counts')
+      await product.increment('view_counts')
 
-      const product = rawProduct.get({ plain: true })
+      product = product.get({ plain: true })
       const categoryId = product.CategoryId
       const category = true
 

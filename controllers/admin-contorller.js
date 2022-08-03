@@ -19,16 +19,16 @@ const adminController = {
   getProductPage: async (req, res, next) => {
     try {
       const id = Number(req.params.id)
-      const rawProduct = await Product.findByPk(id, {
+      let product = await Product.findByPk(id, {
         include: [Category]
       })
 
-      if (!rawProduct) {
+      if (!product) {
         req.flash('error_messages', '無法查看不存在的產品。')
         return res.redirect('back')
       }
 
-      const product = rawProduct.get({ plain: true })
+      product = product.get({ plain: true })
 
       return res.render('admin/product', { product })
     } catch (err) {
@@ -77,7 +77,7 @@ const adminController = {
   getEditPage: async (req, res, next) => {
     try {
       const id = Number(req.params.id)
-      const [rawProduct, categories] = await Promise.all([
+      let [product, categories] = await Promise.all([
         Product.findByPk(id, {
           include: [Category]
         }),
@@ -87,12 +87,12 @@ const adminController = {
         })
       ])
 
-      if (!rawProduct) {
+      if (!product) {
         req.flash('error_messages', '無法查看不存在的產品。')
         return res.redirect('back')
       }
 
-      const product = rawProduct.get({ plain: true })
+      product = product.get({ plain: true })
       res.render('admin/edit-product', { product, categories })
     } catch (err) {
       console.error(err)
@@ -203,18 +203,18 @@ const adminController = {
   getOrderPage: async (req, res, next) => {
     try {
       const id = req.params.id
-      const rawOrder = await Order.findByPk(id, {
+      let order = await Order.findByPk(id, {
         include: [
           { model: Product, as: 'orderedProducts', attributes: ['id', 'name', 'price', 'quantity', 'image'] }
         ]
       })
 
-      if (!rawOrder) {
+      if (!order) {
         req.flash('error_messages', '無法查找不存在的訂單。')
         return res.redirect('back')
       }
 
-      const order = rawOrder.get({ plain: true })
+      order = order.get({ plain: true })
 
       let totalPrice = 0
 
