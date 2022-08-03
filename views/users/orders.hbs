@@ -32,9 +32,27 @@
             訂單取消
           {{/ifCond}}
           {{#ifCond this.shippingStatus 'processing' }}  
-          <form action="/orders/{{this.id}}/cancel" method="POST" style="display: inline;">
-            <button type="submit" class="btn btn-outline-danger">取消訂單</button>
-          </form> 
+          <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#cancelOrder">
+            訂單取消
+          </button>
+
+          <div class="modal fade" id="cancelOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">訂單取消</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  請透過 Line 或 IG 聯繫客服後辦理訂單取消。
+                  <p class="fw-bold" style="color: red">注意：若商品已出貨則無法辦理。</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                </div>
+              </div>
+            </div>
+          </div>
           {{/ifCond}}
         </td>
         <td><a class="btn btn-primary" href="/orders/{{this.id}}" role="button">查看訂單</a></td>
