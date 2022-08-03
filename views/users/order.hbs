@@ -1,0 +1,44 @@
+<div class="m-5">
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="able-secondary" scope="col"></th>
+        <th class="able-secondary" scope="col">產品名稱</th>
+        <th class="able-secondary" scope="col">產品數量</th>
+        <th class="able-secondary" scope="col">產品金額</th>
+        <th class="able-secondary" scope="col">小計</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each order.orderedProducts}}
+      <tr>
+        <td><img src="{{this.image}}" alt="產品照片" 
+          width="150px"
+          height="100px"
+          style="transition: opacity 0.5s; opacity:0;"
+          onload="this.style.opacity=1;"></td>
+        <td>
+          <p>{{this.name}}</p>
+          <p  class="text-muted">重量：{{this.weight}}</p>
+        </td>
+        <td>{{this.OrderItem.quantity}}</td>
+        <td>{{this.price}}</td>
+        <td>$ {{this.price}} * {{this.OrderItem.quantity}}</td>
+      </tr>
+      {{/each}}
+      <tr>
+        <td></td>
+        <td></td>
+        <td class="total"></td>
+        <td>
+          <h6 class="m-0">總計</h6>
+        </td>
+        <td>
+          <h6 class="m-0">$ {{totalPrice}}</h6>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <a class="btn btn-outline-secondary" href="javascript:history.back()">返回上一頁</a>
+
+</div>
