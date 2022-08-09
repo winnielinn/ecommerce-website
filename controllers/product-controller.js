@@ -53,7 +53,15 @@ const productController = {
       const categoryId = product.CategoryId
       const category = true
 
-      return res.render('product', { product, categories, categoryId, category })
+      let QUANTITY_LENGTH = product.quantity
+
+      if (QUANTITY_LENGTH >= 10) {
+        QUANTITY_LENGTH = 10
+      }
+
+      const quantity = Array.from({ length: QUANTITY_LENGTH }, (_v, i) => ++i)
+
+      return res.render('product', { product, categories, categoryId, category, quantity })
     } catch (err) {
       console.error(err)
     }

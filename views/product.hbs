@@ -5,10 +5,30 @@
 
   <div class="col-md-6">
     <h1 class="product-title">{{product.name}}</h1> 
-    <div class="product-box d-flex justify-content-between">
-      <span class="product-weight mt-3">{{product.weight}}</span>
-      <p class="product-price mt-5" style="color: #FF5151;">$ {{product.price}}</p>
+    <p class="product-price" style="color: #FF5151;">$ {{product.price}}</p>
+    <hr>
+    <p class="product-weight text-muted mt-4">重量：{{product.weight}}</p>
+    <p class="product-description" style="white-space: break-spaces;">{{product.description}}</p>
+
+    {{#if quantity}}
+    <div class="btn-group mt-3">
+      <form action="/cart" class="d-flex flex-column" method="POST">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="quantity">數量</label>
+          <select name="quantity" class="form-select" id="quantity">
+            {{#each quantity}}
+              <option {{#ifCond 1 this}}selected{{/ifCond}} value="{{this}}">{{this}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <input type="hidden" name="productId" value="{{product.id}}">
+
+        <button type="submit" class="btn btn-outline-secondary">加入購物車</button>
+      </form>
     </div>
-    <p class="product-description mt-5 text-secondary" style="white-space: break-spaces;">{{product.description}}</p>
+    {{else}}
+    <button type="button" class="btn btn-outline-secondary btn-lg" disabled>已售完</button>
+    {{/if}}
   </div>
 </div>
