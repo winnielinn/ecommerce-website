@@ -29,7 +29,7 @@
         </td>
         <td>
           {{#ifCond this.shippingStatus 'cancelled'}}
-            訂單取消
+            取消
           {{/ifCond}}
           {{#ifCond this.shippingStatus 'processing' }}  
           <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#cancelOrder">
