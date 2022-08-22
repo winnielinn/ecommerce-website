@@ -13,17 +13,27 @@ const apiService = {
             id: parseInt(productIdsInArray[i], 10)
           },
           attributes: [
-            'name', 'price', 'quantity', 'image'
+            'id', 'name', 'price', 'quantity', 'image'
           ]
         })
         cartItems.push(product.get({ plain: true }))
       }
 
-      console.log(cartItems)
       return res.json(cartItems)
     } catch (err) {
       console.error(err)
     }
+  },
+  getProductInCart: async function (req, res, next) {
+    const id = Number(req.query.productId)
+    const rawProduct = await Product.findByPk(id, {
+      attributes: [
+        'id', 'price', 'quantity'
+      ]
+    })
+    const product = rawProduct.get({ plain: true })
+
+    res.json(product)
   }
 }
 

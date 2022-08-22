@@ -1,0 +1,31 @@
+<div class="row m-5">
+
+  <h5 class="text-center">購物車</h5>
+
+   <div class="my-3">
+
+    <table class="table">
+      <thead class="table-light" style="text-align: center;">
+        <tr>
+          <th></th>
+          <th scope="col">產品名稱</th>
+          <th scope="col">產品金額</th>
+          <th scope="col">產品數量</th>
+          <th scope="col">小計</th>
+          <th scope="col">移除</th>
+        </tr>
+      </thead>
+      <tbody style="text-align: center;" class="cart">
+      </tbody>
+    </table>
+
+    <div class=" button-container d-flex justify-content-between mt-5">
+      <a href="/products" class="btn btn-outline-secondary mx-2">繼續逛逛</a>
+      <a href="/cart/checkout" class="btn btn-dark">立即結帳 ➜</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/javascripts/getCart.js"></script>
+<script src="/javascripts/changeQuantity.js"></script>

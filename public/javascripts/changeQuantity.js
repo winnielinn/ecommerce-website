@@ -1,0 +1,50 @@
+const cart = document.querySelector('.cart')
+
+async function dataPanelControl (event) {
+  // 先找到觸發案件的目標並得到目前於購物車的數量和 id
+  const target = event.target
+  const quantityInCart = target.parentElement.children[1]
+  const productId = target.dataset.id
+
+  if (target.matches('.add-product-quantity') || target.matches('.reduce-product-quantity')) {
+    let quantityChanged = Number(quantityInCart.textContent)
+
+    // 透過 API 拿到該 id 的 product
+    const response = await axios.get('/api/cartItem', {
+      params: {
+        productId
+      }
+    })
+    const product = response.data
+
+    // 判斷點擊的目標為加減或刪除
+    if (target.matches('.add-product-quantity')) {
+      const quantity = quantityChanged < product.quantity ? ++quantityChanged : quantityChanged = product.quantity
+
+      target.parentElement.nextElementSibling.children[0].innerText = `${product.price} * ${quantity}`
+    } else {
+      const quantity = quantityChanged <= 1 ? 1 : --quantityChanged
+
+      target.parentElement.nextElementSibling.children[0].innerText = `${product.price} * ${quantity}`
+    }
+
+    // 將產品數量改變
+    quantityInCart.innerText = quantityChanged
+
+    // 更改總金額
+    const productQuantity = document.querySelectorAll('.prodcut-quantity')
+    const productPirce = document.querySelectorAll('.price')
+    const totalPrice = document.querySelector('.total-price')
+    let totalPriceInCart = 0
+
+    for (let i = 0; i < productQuantity.length; i++) {
+      totalPriceInCart += Number(productQuantity[i].innerText) * Number(productPirce[i].innerText)
+    }
+
+    totalPrice.innerText = totalPriceInCart
+  } else if (target.matches('.delete-product') || target.matches('.remove-product')) {
+    console.log('4555')
+  }
+}
+
+cart.addEventListener('click', dataPanelControl)

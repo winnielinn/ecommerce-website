@@ -2,20 +2,26 @@
   'use strict'
 
   // 將存放在 local storage 內的 id 拿出來
-  let products = []
   const productIds = JSON.parse(localStorage.getItem('cartItem'))
 
-  console.log(productIds)
+  // 設定總金額
+  let totalPrice = 0
 
   // 以 axios 方式呼叫 api 並取得相對應 product_id 的 product
-  await axios.get('/api/cartItems', {
+  const response = await axios.get('/api/cartItems', {
     params: {
       productIds: productIds.reduce((f, s) => `${f},${s}`)
     }
   })
-    .then(response => {
-      products = response.data
-    })
+
+  const products = response.data
+
+  // 預設在購物車的數量為 1
+  // 進行總金額加總
+  for (let i = 0; i < products.length; i++) {
+    products[i].quantityInCart = 1
+    totalPrice += products[i].quantityInCart * products[i].price
+  }
 
   // 將獲取的 product 資料動態渲染頁面
   const cart = document.querySelector('.cart')
@@ -31,9 +37,20 @@
         style="transition: opacity 0.5s; opacity:0;"
         onload="this.style.opacity=1;"></td>
       <td>${products[i].name}</td>
-      <td>${products[i].price}</td>
-      <td>1</td>
-      <td>${products[i].price} * ${products[i].quantity}</td>
+      <td>
+        <span class="price">${products[i].price}</span>
+      </td>
+      <td>
+        <button type="submit" class="btn btn-sm btn-outline-secondary add-product-quantity" data-id="${products[i].id}">+</button>
+        <span class="prodcut-quantity p-2">${products[i].quantityInCart}</span>
+        <button type="submit" class="btn btn-sm btn-outline-secondary reduce-product-quantity" data-id="${products[i].id}">-</button>
+      </td>
+      <td>
+        <span class="prodcut-price-multiply-quantity">${products[i].price} * ${products[i].quantityInCart}</span>
+      </td>
+      <td>
+        <button type="submit" class="btn btn-link remove-product" style="color: gray" data-id="${products[i].id}"><i class="fa-solid fa-trash-can delete-product"></i></button>
+      </td>
     </tr>
     `
   }
@@ -49,7 +66,7 @@
         <h6 style="margin: 0;">總金額: </h6>
       </td>
       <td>
-        <h6 style="margin: 0;">$ </h6>
+        <h6 style="margin: 0;" class="total-price">$ ${totalPrice}</h6>
       </td>
     </tr>
   `
