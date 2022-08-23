@@ -30,21 +30,29 @@ async function dataPanelControl (event) {
 
     // 將產品數量改變
     quantityInCart.innerText = quantityChanged
+  } else if (target.matches('.remove-product')) {
+    // localStorageq 刪除
+    const productIds = JSON.parse(localStorage.getItem('cartItem'))
+    const prodcutIndex = productIds.findIndex(id => Number(id) === Number(productId))
+    productIds.splice(prodcutIndex, 1)
 
-    // 更改總金額
-    const productQuantity = document.querySelectorAll('.prodcut-quantity')
-    const productPirce = document.querySelectorAll('.price')
-    const totalPrice = document.querySelector('.total-price')
-    let totalPriceInCart = 0
+    localStorage.setItem('cartItem', JSON.stringify(productIds))
 
-    for (let i = 0; i < productQuantity.length; i++) {
-      totalPriceInCart += Number(productQuantity[i].innerText) * Number(productPirce[i].innerText)
-    }
-
-    totalPrice.innerText = totalPriceInCart
-  } else if (target.matches('.delete-product') || target.matches('.remove-product')) {
-    console.log('4555')
+    // 畫面刪除
+    target.parentElement.parentElement.remove()
   }
+
+  // 更改總金額
+  const productQuantity = document.querySelectorAll('.prodcut-quantity')
+  const productPirce = document.querySelectorAll('.price')
+  const totalPrice = document.querySelector('.total-price')
+  let totalPriceInCart = 0
+
+  for (let i = 0; i < productQuantity.length; i++) {
+    totalPriceInCart += Number(productQuantity[i].innerText) * Number(productPirce[i].innerText)
+  }
+
+  totalPrice.innerText = `$ ${totalPriceInCart}`
 }
 
 cart.addEventListener('click', dataPanelControl)

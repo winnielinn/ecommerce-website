@@ -49,7 +49,7 @@
         <span class="prodcut-price-multiply-quantity">${products[i].price} * ${products[i].quantityInCart}</span>
       </td>
       <td>
-        <button type="submit" class="btn btn-link remove-product" style="color: gray" data-id="${products[i].id}"><i class="fa-solid fa-trash-can delete-product"></i></button>
+        <i class="fa-solid fa-trash-can remove-product"></i>
       </td>
     </tr>
     `
@@ -68,6 +68,7 @@
       <td>
         <h6 style="margin: 0;" class="total-price">$ ${totalPrice}</h6>
       </td>
+      <td></td>
     </tr>
   `
 
