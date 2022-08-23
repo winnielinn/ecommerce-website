@@ -41,9 +41,9 @@
         <span class="price">${products[i].price}</span>
       </td>
       <td>
-        <button type="submit" class="btn btn-sm btn-outline-secondary add-product-quantity" data-id="${products[i].id}">+</button>
+        <a class="btn btn-sm btn-outline-secondary add-product-quantity" data-id="${products[i].id}">+</a>
         <span class="prodcut-quantity p-2">${products[i].quantityInCart}</span>
-        <button type="submit" class="btn btn-sm btn-outline-secondary reduce-product-quantity" data-id="${products[i].id}">-</button>
+        <a class="btn btn-sm btn-outline-secondary reduce-product-quantity" data-id="${products[i].id}">-</a>
       </td>
       <td>
         <span class="prodcut-price-multiply-quantity">${products[i].price} * ${products[i].quantityInCart}</span>
@@ -51,6 +51,8 @@
       <td>
         <i class="fa-solid fa-trash-can remove-product"></i>
       </td>
+      <input type="hidden" name="productId" class="productId" value="${products[i].id}" />
+      <input type="hidden" class="productQuantityInCart${products[i].id}" name="productQuantityInCart" value="${products[i].quantityInCart}" />
     </tr>
     `
   }
@@ -68,7 +70,7 @@
       <td>
         <h6 style="margin: 0;" class="total-price">$ ${totalPrice}</h6>
       </td>
-      <td></td>
+            <td></td>
     </tr>
   `
 

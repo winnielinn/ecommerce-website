@@ -30,6 +30,9 @@ async function dataPanelControl (event) {
 
     // 將產品數量改變
     quantityInCart.innerText = quantityChanged
+
+    // 修改傳回後端的值
+    document.querySelector(`.productQuantityInCart${productId}`).value = quantityChanged
   } else if (target.matches('.remove-product')) {
     // localStorageq 刪除
     const productIds = JSON.parse(localStorage.getItem('cartItem'))
