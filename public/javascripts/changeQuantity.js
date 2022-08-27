@@ -47,12 +47,12 @@ async function dataPanelControl (event) {
 
   // 更改總金額
   const productQuantity = document.querySelectorAll('.prodcut-quantity')
-  const productPirce = document.querySelectorAll('.price')
+  const productPrice = document.querySelectorAll('.price')
   const totalPrice = document.querySelector('.total-price')
   let totalPriceInCart = 0
 
   for (let i = 0; i < productQuantity.length; i++) {
-    totalPriceInCart += Number(productQuantity[i].innerText) * Number(productPirce[i].innerText)
+    totalPriceInCart += Number(productQuantity[i].innerText) * Number(productPrice[i].innerText)
   }
 
   totalPrice.innerText = `$ ${totalPriceInCart}`

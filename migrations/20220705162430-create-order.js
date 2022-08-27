@@ -21,15 +21,19 @@ module.exports = {
         }
       },
       phone: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       address: {
+        allowNull: false,
         type: Sequelize.TEXT
       },
       payment_status: {
+        defaultValue: 'unpaid',
         type: Sequelize.STRING
       },
       shipping_status: {
+        defaultValue: 'processing',
         type: Sequelize.STRING
       },
       total_amount: {
