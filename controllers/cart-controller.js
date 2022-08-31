@@ -22,13 +22,18 @@ const cartController = {
         })
 
         const product = rawProduct.get({ plain: true })
-        product.quantityInCart = productQuantityInCart[i]
+        if (typeof productQuantityInCart === 'string') {
+          product.quantityInCart = productQuantityInCart
+        } else {
+          product.quantityInCart = productQuantityInCart[i]
+        }
+
         totalPrice += product.price * product.quantityInCart
 
         products.push(product)
       }
 
-      res.render('checkout', { products, totalPrice })
+      res.render('users/checkout', { products, totalPrice })
     } catch (err) {
       console.error(err)
     }
