@@ -18,13 +18,18 @@
           </div>
           <div class="col mb-5">
             <button
-              class="btn btn-primary btn-block"
+              class="btn btn-primary btn-block submit-order-button"
               style="background-color: #FF7575; border-color:#FF7575"
               type="submit">送出訂單
             </button>
             <a class="btn btn-outline-secondary" href="javascript:history.back()">修改訂單</a>
           </div>
           <input type="hidden" name="totalAmount" value="{{totalPrice}}">
+          {{#each products}}
+          <input type="hidden" name="productId" value="{{this.id}}">
+          <input type="hidden" name="price" value="{{this.price}}">
+          <input type="hidden" name="quantityInCart" value="{{this.quantityInCart}}">
+          {{/each}}
         </form>
     </div>
     <div class="mb-5 p-5" style="background-color: #f2f2f2">
@@ -54,3 +59,5 @@
     </div>  
   </div>
 </div>
+
+<script src="/javascripts/removeCart.js"></script>
