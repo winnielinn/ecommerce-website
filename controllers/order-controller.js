@@ -75,7 +75,7 @@ const orderController = {
         })
 
         const product = await Product.findByPk(productId[i])
-        product.update({
+        await product.update({
           quantity: product.quantity -= quantityInCart[i]
         })
       }
