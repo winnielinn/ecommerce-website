@@ -51,8 +51,16 @@ const orderController = {
   },
   postOrder: async (req, res, next) => {
     try {
-      const { name, phone, address, totalAmount, productId, price, quantityInCart } = req.body
+      let { name, phone, address, totalAmount, productId, price, quantityInCart } = req.body
       const UserId = req.user.id
+
+      const productIdArray = []
+      const quantityArray = []
+      productIdArray.push(productId)
+      quantityArray.push(quantityInCart)
+
+      productId = (typeof productId === 'string') ? productIdArray : productId
+      quantityInCart = (typeof quantityInCart === 'string') ? quantityArray : quantityInCart
 
       // 先寫進 Table Order
       const order = await Order.create({
@@ -80,7 +88,7 @@ const orderController = {
         })
       }
 
-      res.render('users/finish-order')
+      res.render('users/finish-order', { order: newOrder })
     } catch (err) {
       console.error(err)
     }
