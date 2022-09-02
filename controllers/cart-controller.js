@@ -10,8 +10,16 @@ const cartController = {
   },
   getCheckoutPage: async (req, res, next) => {
     try {
-      const { productId, productQuantityInCart } = req.body
+      let { productId, productQuantityInCart } = req.body
+
+      if (!productId) return
+
+      const productIdArray = []
       const products = []
+      productIdArray.push(productId)
+
+      productId = (typeof productId === 'string') ? productIdArray : productId
+
       let totalPrice = 0
 
       for (let i = 0; i < productId.length; i++) {
@@ -22,6 +30,7 @@ const cartController = {
         })
 
         const product = rawProduct.get({ plain: true })
+
         if (typeof productQuantityInCart === 'string') {
           product.quantityInCart = productQuantityInCart
         } else {
