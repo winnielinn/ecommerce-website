@@ -10,7 +10,7 @@
   // 以 axios 方式呼叫 api 並取得相對應 product_id 的 product
   const response = await axios.get('/api/cartItems', {
     params: {
-      productIds: productIds.reduce((f, s) => `${f},${s}`)
+      productIds: productIds.toString()
     }
   })
 
