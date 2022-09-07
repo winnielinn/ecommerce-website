@@ -1,4 +1,4 @@
-const { Order, Product } = require('../models')
+const { Order, Product, OrderItem } = require('../models')
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
@@ -45,6 +45,50 @@ const orderController = {
       ))
 
       return res.render('users/order', { order, totalPrice })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  postOrder: async (req, res, next) => {
+    try {
+      let { name, phone, address, totalAmount, productId, price, quantityInCart } = req.body
+      const UserId = req.user.id
+
+      const productIdArray = []
+      const quantityArray = []
+      productIdArray.push(productId)
+      quantityArray.push(quantityInCart)
+
+      productId = (typeof productId === 'string') ? productIdArray : productId
+      quantityInCart = (typeof quantityInCart === 'string') ? quantityArray : quantityInCart
+
+      // 先寫進 Table Order
+      const order = await Order.create({
+        name,
+        UserId,
+        phone,
+        address,
+        totalAmount
+      })
+
+      const newOrder = order.get({ plain: true })
+
+      // 將該筆訂單的內容寫進 Table OrderItem
+      for (let i = 0; i < productId.length; i++) {
+        await OrderItem.create({
+          OrderId: newOrder.id,
+          ProductId: productId[i],
+          quantity: quantityInCart[i],
+          price: price[i]
+        })
+
+        const product = await Product.findByPk(productId[i])
+        await product.update({
+          quantity: product.quantity -= quantityInCart[i]
+        })
+      }
+
+      res.render('users/finish-order', { order: newOrder })
     } catch (err) {
       console.error(err)
     }

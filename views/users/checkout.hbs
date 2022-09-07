@@ -1,0 +1,63 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-around">
+    <div class="row">
+      <h3 class="mb-3">收件人資訊</h3>
+        <form class="user-login-form mt-3" action="orders" method="POST">
+          <div class="form-row mb-3">
+            <label class="form-label" for="name">姓名</label>
+            <input class="form-control" id="name" type="text" name="name" class="form-control" placeholder="Name" required/>
+          </div>
+          <div class="form-row mb-3">
+            <label class="form-label" for="phone">電話</label>
+            <input type="tel" pattern="^[0-9]{9,13}$" name="phone" class="form-control" id="phone" minlength="9"
+                maxlength="13" placeholder="Phone" required>
+          </div>
+          <div class="form-row mb-5">
+            <label class="form-label" for="address">地址</label>
+            <input class="form-control" id="address" type="text" name="address" class="form-control" placeholder="Address" required/>
+          </div>
+          <div class="col mb-5">
+            <button
+              class="btn btn-primary btn-block submit-order-button"
+              style="background-color: #FF7575; border-color:#FF7575"
+              type="submit">送出訂單
+            </button>
+            <a class="btn btn-outline-secondary" href="javascript:history.back()">修改訂單</a>
+          </div>
+          <input type="hidden" name="totalAmount" value="{{totalPrice}}">
+          {{#each products}}
+          <input type="hidden" name="productId" value="{{this.id}}">
+          <input type="hidden" name="price" value="{{this.price}}">
+          <input type="hidden" name="quantityInCart" value="{{this.quantityInCart}}">
+          {{/each}}
+        </form>
+    </div>
+    <div class="mb-5 p-5" style="background-color: #f2f2f2">
+      <h4 class="mb-4" style="text-align: center;">訂單資訊</h4>
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">商品名稱</th>
+            <th scope="col">商品價格</th>
+            <th scope="col">訂購數量</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each products}}
+          <tr>
+            <th scope="row">{{this.id}}</th>
+            <td>{{this.name}}</td>
+            <td>{{this.price}}</td>
+            <td>{{this.quantityInCart}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+
+      <p style="text-align: end" class="mt-3">總金額：$ {{totalPrice}}</p>
+    </div>  
+  </div>
+</div>
+
+<script src="/javascripts/removeCart.js"></script>

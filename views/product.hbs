@@ -10,25 +10,14 @@
     <p class="product-weight text-muted mt-4">重量：{{product.weight}}</p>
     <p class="product-description" style="white-space: break-spaces;">{{product.description}}</p>
 
-    {{#if quantity}}
+    {{#if product.quantity}}
     <div class="btn-group mt-3">
-      <form action="/cart" class="d-flex flex-column" method="POST">
-        <div class="input-group mb-3">
-          <label class="input-group-text" for="quantity">數量</label>
-          <select name="quantity" class="form-select" id="quantity">
-            {{#each quantity}}
-              <option {{#ifCond 1 this}}selected{{/ifCond}} value="{{this}}">{{this}}</option>
-            {{/each}}
-          </select>
-        </div>
-
-        <input type="hidden" name="productId" value="{{product.id}}">
-
-        <button type="submit" class="btn btn-outline-secondary">加入購物車</button>
-      </form>
+      <button type="submit" class="btn btn-outline-secondary add-cart" data-id="{{product.id}}">加入購物車</button>
     </div>
     {{else}}
     <button type="button" class="btn btn-outline-secondary btn-lg" disabled>已售完</button>
     {{/if}}
   </div>
 </div>
+
+<script src="/javascripts/addCart.js"></script>

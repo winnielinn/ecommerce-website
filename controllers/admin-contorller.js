@@ -1,4 +1,4 @@
-const { Product, Category, User, Order } = require('../models')
+const { Product, Category, User, Order, OrderItem } = require('../models')
 
 const { imgurFileHandler } = require('../helpers/file-helper')
 
@@ -129,7 +129,7 @@ const adminController = {
         description
       })
 
-      req.flash('success_messages', `該商品 ${name} 已經被修改成功。`)
+      req.flash('success_messages', `商品 ${name} 已經被修改成功。`)
       return res.redirect('/admin/products')
     } catch (err) {
       console.error(err)
@@ -182,19 +182,40 @@ const adminController = {
   cancelOrder: async (req, res, next) => {
     try {
       const id = req.params.id
-      const order = await Order.findByPk(id)
+      const order = await Order.findByPk(id,
+        {
+          include: [
+            {
+              model: OrderItem,
+              attributes: ['quantity', 'Product_id']
+            }
+          ]
+        }
+      )
 
       if (!order) {
         req.flash('error_messages', '無法取消不存在的訂單。')
         return res.redirect('back')
       }
 
+      // 更新訂單狀態
       await order.update({
         paymentStatus: 'cancelled',
         shippingStatus: 'cancelled'
       })
 
-      req.flash('success_messages', `已成功取消訂單編號 ${id}`)
+      // 把原先的數量補回 Table Product
+      const orderItems = order.get({ plain: true }).OrderItems
+      console.log(orderItems)
+      for (let i = 0; i < orderItems.length; i++) {
+        const product = await Product.findByPk(orderItems[i].Product_id)
+        const quantity = orderItems[i].quantity
+        await product.update({
+          quantity: product.quantity += quantity
+        })
+      }
+
+      req.flash('success_messages', `已成功取消訂單編號 ${id} 的訂單。`)
       return res.redirect('/admin/orders')
     } catch (err) {
       console.error(err)

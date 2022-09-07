@@ -4,8 +4,8 @@
       <tr>
         <th class="able-secondary" scope="col"></th>
         <th class="able-secondary" scope="col">產品名稱</th>
-        <th class="able-secondary" scope="col">產品數量</th>
         <th class="able-secondary" scope="col">產品金額</th>
+        <th class="able-secondary" scope="col">產品數量</th>
         <th class="able-secondary" scope="col">小計</th>
       </tr>
     </thead>
@@ -21,8 +21,8 @@
           <p>{{this.name}}</p>
           <p  class="text-muted">重量：{{this.weight}}</p>
         </td>
-        <td>{{this.OrderItem.quantity}}</td>
         <td>{{this.price}}</td>
+        <td>{{this.OrderItem.quantity}}</td>
         <td>$ {{this.price}} * {{this.OrderItem.quantity}}</td>
       </tr>
       {{/each}}
