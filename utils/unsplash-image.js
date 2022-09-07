@@ -12,7 +12,7 @@ const QUANTITY = 30 // 和 PRODUCT_AMOUNT in product-seed-file 相同
 
 const SEARCH_URL = URL + `&per_page=${QUANTITY}&query=${SEARCH_ITEM}&orientation=squarish`
 
-async function createImage () {
+async function createImage (req, res, next) {
   try {
     const response = await axios.get(SEARCH_URL)
     const data = response.data.results
@@ -20,7 +20,7 @@ async function createImage () {
 
     return image
   } catch (err) {
-    console.error(err)
+    next(err)
   }
 }
 

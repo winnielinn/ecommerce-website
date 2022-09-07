@@ -13,7 +13,7 @@ const adminController = {
 
       return res.render('admin/products', { products })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   getProductPage: async (req, res, next) => {
@@ -23,16 +23,13 @@ const adminController = {
         include: [Category]
       })
 
-      if (!product) {
-        req.flash('error_messages', '無法查看不存在的產品。')
-        return res.redirect('back')
-      }
+      if (!product) throw new Error('無法查看不存在的商品。')
 
       product = product.get({ plain: true })
 
       return res.render('admin/product', { product })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   getCreatePage: async (req, res, next) => {
@@ -43,17 +40,14 @@ const adminController = {
       })
       res.render('admin/create-product', { categories })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   postProduct: async (req, res, next) => {
     try {
       const { name, categoryId, price, weight, quantity, description } = req.body
 
-      if (!name || !categoryId || !price || !weight) {
-        req.flash('error_messages', '* 為必填欄位。')
-        return res.redirect('back')
-      }
+      if (!name || !categoryId || !price || !weight) throw new Error('* 為必填欄位。')
 
       const { file } = req
       const filePath = await imgurFileHandler(file)
@@ -71,7 +65,7 @@ const adminController = {
       req.flash('success_messages', `已經成功新增 ${name} 這個商品。`)
       return res.redirect('/admin/products')
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   getEditPage: async (req, res, next) => {
@@ -87,15 +81,12 @@ const adminController = {
         })
       ])
 
-      if (!product) {
-        req.flash('error_messages', '無法查看不存在的產品。')
-        return res.redirect('back')
-      }
+      if (!product) throw new Error('無法查看不存在的商品。')
 
       product = product.get({ plain: true })
       res.render('admin/edit-product', { product, categories })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   editProduct: async (req, res, next) => {
@@ -104,20 +95,14 @@ const adminController = {
       const { file } = req
       const { name, categoryId, price, weight, quantity, description } = req.body
 
-      if (!name || !categoryId || !price || !weight) {
-        req.flash('error_messages', '* 為必填欄位。')
-        return res.redirect('back')
-      }
+      if (!name || !categoryId || !price || !weight) throw new Error('* 為必填欄位。')
 
       const [product, filePath] = await Promise.all([
         Product.findByPk(id),
         imgurFileHandler(file)
       ])
 
-      if (!product) {
-        req.flash('error_messages', '無法編輯不存在的產品。')
-        return res.redirect('back')
-      }
+      if (!product) throw new Error('無法編輯不存在的商品。')
 
       await product.update({
         name,
@@ -132,7 +117,7 @@ const adminController = {
       req.flash('success_messages', `商品 ${name} 已經被修改成功。`)
       return res.redirect('/admin/products')
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   deleteProduct: async (req, res, next) => {
@@ -144,15 +129,12 @@ const adminController = {
         }
       })
 
-      if (!product) {
-        req.flash('error_messages', '無法刪除不存在的產品。')
-        return res.redirect('back')
-      }
+      if (!product) throw new Error('無法刪除不存在的商品。')
 
       req.flash('success_messages', '已成功刪除一項產品。')
       return res.redirect('/admin/products')
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   getUsersPage: async (req, res, next) => {
@@ -166,7 +148,7 @@ const adminController = {
       })
       res.render('admin/users', { users })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   getOrdersPage: async (req, res, next) => {
@@ -176,7 +158,7 @@ const adminController = {
       })
       res.render('admin/orders', { orders })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   cancelOrder: async (req, res, next) => {
@@ -193,10 +175,7 @@ const adminController = {
         }
       )
 
-      if (!order) {
-        req.flash('error_messages', '無法取消不存在的訂單。')
-        return res.redirect('back')
-      }
+      if (!order) throw new Error('無法取消不存在的商品。')
 
       // 更新訂單狀態
       await order.update({
@@ -218,7 +197,7 @@ const adminController = {
       req.flash('success_messages', `已成功取消訂單編號 ${id} 的訂單。`)
       return res.redirect('/admin/orders')
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   getOrderPage: async (req, res, next) => {
@@ -230,10 +209,7 @@ const adminController = {
         ]
       })
 
-      if (!order) {
-        req.flash('error_messages', '無法查找不存在的訂單。')
-        return res.redirect('back')
-      }
+      if (!order) throw new Error('無法查找不存在的商品。')
 
       order = order.get({ plain: true })
 
@@ -245,7 +221,7 @@ const adminController = {
 
       return res.render('admin/order', { order, totalPrice })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   putOrder: async (req, res, next) => {
@@ -253,17 +229,11 @@ const adminController = {
       const id = req.params.id
       const { payment, shipment } = req.body
 
-      if (!payment || !shipment) {
-        req.flash('error_messages', '付款狀態或是運送狀態需要被選取。')
-        return res.redirect('back')
-      }
+      if (!payment || !shipment) throw new Error('付款狀態或是運送狀態需要被選取。')
 
       const order = await Order.findByPk(id)
 
-      if (!order) {
-        req.flash('error_messages', '無法更改不存在的訂單。')
-        return res.redirect('back')
-      }
+      if (!order) throw new Error('無法編輯不存在的訂單。')
 
       await order.update({
         paymentStatus: payment,
@@ -273,7 +243,7 @@ const adminController = {
       req.flash('success_messages', '已成功更改付款狀態及運送狀態。')
       return res.redirect(`/admin/orders/${id}`)
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   }
 }

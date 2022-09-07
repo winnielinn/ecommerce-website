@@ -9,27 +9,31 @@ const productController = {
       const category = true
       return res.render('home', { categories, category })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   getAllProducts: async (req, res, next) => {
-    const categoryId = Number(req.query.categoryId) || ''
+    try {
+      const categoryId = Number(req.query.categoryId) || ''
 
-    const [products, categories] = await Promise.all([
-      await Product.findAll({
-        included: Category,
-        where: {
-          ...categoryId ? { CategoryId: categoryId } : {}
-        },
-        nest: true,
-        raw: true
-      }),
-      Category.findAll({ raw: true })
-    ])
+      const [products, categories] = await Promise.all([
+        await Product.findAll({
+          included: Category,
+          where: {
+            ...categoryId ? { CategoryId: categoryId } : {}
+          },
+          nest: true,
+          raw: true
+        }),
+        Category.findAll({ raw: true })
+      ])
 
-    const category = true
+      const category = true
 
-    return res.render('products', { products, categories, categoryId, category })
+      return res.render('products', { products, categories, categoryId, category })
+    } catch (err) {
+      next(err)
+    }
   },
   getProduct: async (req, res, next) => {
     try {
@@ -42,10 +46,7 @@ const productController = {
         })
       ])
 
-      if (!product) {
-        req.flash('error_messages', '無法查看不存在的產品。')
-        return res.redirect('back')
-      }
+      if (!product) throw new Error('無法查看不存在的商品。')
 
       await product.increment('view_counts')
 
@@ -55,7 +56,7 @@ const productController = {
 
       return res.render('product', { product, categories, categoryId, category })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   }
 }

@@ -19,7 +19,7 @@ const orderController = {
 
       res.render('users/orders', { orders })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   getOrder: async (req, res, next) => {
@@ -31,10 +31,7 @@ const orderController = {
         ]
       })
 
-      if (!order) {
-        req.flash('error_messages', '無法查找不存在的訂單。')
-        return res.redirect('back')
-      }
+      if (!order) throw new Error('無法查找不存在的訂單。')
 
       order = order.get({ plain: true })
 
@@ -46,7 +43,7 @@ const orderController = {
 
       return res.render('users/order', { order, totalPrice })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   postOrder: async (req, res, next) => {
@@ -90,7 +87,7 @@ const orderController = {
 
       res.render('users/finish-order', { order: newOrder })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   }
 }

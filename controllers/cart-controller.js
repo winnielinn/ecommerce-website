@@ -5,7 +5,7 @@ const cartController = {
     try {
       res.render('cart')
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   },
   getCheckoutPage: async (req, res, next) => {
@@ -44,7 +44,7 @@ const cartController = {
 
       res.render('users/checkout', { products, totalPrice })
     } catch (err) {
-      console.error(err)
+      next(err)
     }
   }
 }
