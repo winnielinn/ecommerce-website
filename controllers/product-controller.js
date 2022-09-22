@@ -1,62 +1,14 @@
-const { Category, Product } = require('../models')
+const productService = require('../services/product-service')
 
 const productController = {
   getHomePage: async (req, res, next) => {
-    try {
-      const categories = await Category.findAll({
-        raw: true
-      })
-      const category = true
-      return res.render('home', { categories, category })
-    } catch (err) {
-      console.error(err)
-    }
+    productService.getHomePage(req, (err, data) => err ? next(err) : res.render('home', data))
   },
   getAllProducts: async (req, res, next) => {
-    const categoryId = Number(req.query.categoryId) || ''
-
-    const [products, categories] = await Promise.all([
-      await Product.findAll({
-        included: Category,
-        where: {
-          ...categoryId ? { CategoryId: categoryId } : {}
-        },
-        nest: true,
-        raw: true
-      }),
-      Category.findAll({ raw: true })
-    ])
-
-    const category = true
-
-    return res.render('products', { products, categories, categoryId, category })
+    productService.getAllProducts(req, (err, data) => err ? next(err) : res.render('products', data))
   },
   getProduct: async (req, res, next) => {
-    try {
-      const id = Number(req.params.id)
-
-      let [product, categories] = await Promise.all([
-        Product.findByPk(id),
-        Category.findAll({
-          raw: true
-        })
-      ])
-
-      if (!product) {
-        req.flash('error_messages', '無法查看不存在的產品。')
-        return res.redirect('back')
-      }
-
-      await product.increment('view_counts')
-
-      product = product.get({ plain: true })
-      const categoryId = product.CategoryId
-      const category = true
-
-      return res.render('product', { product, categories, categoryId, category })
-    } catch (err) {
-      console.error(err)
-    }
+    productService.getProduct(req, (err, data) => err ? next(err) : res.render('product', data))
   }
 }
 

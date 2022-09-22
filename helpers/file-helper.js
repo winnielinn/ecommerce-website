@@ -7,7 +7,7 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 imgur.setClientId(IMGUR_CLIENT_ID)
 
 // 暫存至 temp 和 upload 資料夾
-const localFileHandler = async file => {
+const localFileHandler = async (file) => {
   try {
     if (!file) return null
 
@@ -16,18 +16,19 @@ const localFileHandler = async file => {
     await fs.promises.writeFile(fileName, data)
     return `/${fileName}`
   } catch (err) {
-    console.error(err)
+    return err
   }
 }
 
 // 使用 imgur
-const imgurFileHandler = async file => {
+const imgurFileHandler = async (file) => {
   try {
     // 上傳圖片
+    if (!file) return null
     const img = await imgur.uploadFile(file.path)
     return img?.link || null
   } catch (err) {
-    console.error(err)
+    return err
   }
 }
 

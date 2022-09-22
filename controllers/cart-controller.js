@@ -1,51 +1,11 @@
-const { Product } = require('../models')
+const cartService = require('../services/cart-service')
 
 const cartController = {
   getCartPage: async (req, res, next) => {
-    try {
-      res.render('cart')
-    } catch (err) {
-      console.error(err)
-    }
+    cartService.getCartPage(req, (err, _data) => err ? next(err) : res.render('cart'))
   },
   getCheckoutPage: async (req, res, next) => {
-    try {
-      let { productId, productQuantityInCart } = req.body
-
-      if (!productId) return
-
-      const productIdArray = []
-      const products = []
-      productIdArray.push(productId)
-
-      productId = (typeof productId === 'string') ? productIdArray : productId
-
-      let totalPrice = 0
-
-      for (let i = 0; i < productId.length; i++) {
-        const rawProduct = await Product.findByPk(productId[i], {
-          attributes: [
-            'id', 'name', 'price', 'quantity'
-          ]
-        })
-
-        const product = rawProduct.get({ plain: true })
-
-        if (typeof productQuantityInCart === 'string') {
-          product.quantityInCart = productQuantityInCart
-        } else {
-          product.quantityInCart = productQuantityInCart[i]
-        }
-
-        totalPrice += product.price * product.quantityInCart
-
-        products.push(product)
-      }
-
-      res.render('users/checkout', { products, totalPrice })
-    } catch (err) {
-      console.error(err)
-    }
+    cartService.getCheckoutPage(req, (err, data) => err ? next(err) : res.render('users/checkout', data))
   }
 }
 
