@@ -88,6 +88,13 @@ const orderService = {
     } catch (err) {
       callback(err)
     }
+  },
+  getCheckoutPage: async (req, callback) => {
+    const id = req.params.id
+    let order = await Order.findByPk(id)
+    order = order.get({ plain: true })
+
+    return callback(null, { order })
   }
 }
 

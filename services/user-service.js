@@ -76,7 +76,7 @@ const userService = {
         email
       })
 
-      return callback(null, {updatedUser })
+      return callback(null, { updatedUser })
     } catch (err) {
       callback(err)
     }

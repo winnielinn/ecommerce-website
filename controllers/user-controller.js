@@ -1,8 +1,3 @@
-const bcrypt = require('bcryptjs')
-
-const { User } = require('../models')
-const { getUser } = require('../helpers/auth-helper')
-
 const userService = require('../services/user-service')
 
 const userController = {
