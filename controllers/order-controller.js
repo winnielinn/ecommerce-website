@@ -12,10 +12,10 @@ const orderController = {
     orderService.getOrder(req, (err, data) => err ? next(err) : res.render('users/order', data))
   },
   postOrder: async (req, res, next) => {
-    orderService.postOrder(req, (err, data) => err ? next(err) : res.render('users/finish-order', data))
+    orderService.postOrder(req, (err, data) => err ? next(err) : res.render('users/payment', data))
   },
-  getCheckoutPage: async (req, res, next) => {
-    orderService.getCheckoutPage(req, (err, data) => err ? next(err) : res.render('users/finish-order', data))
+  getPayment: async (req, res, next) => {
+    orderService.getPayment(req, (err, data) => err ? next(err) : res.render('users/payment', data))
   }
 }
 
