@@ -12,7 +12,7 @@ const orderController = {
     orderService.getOrder(req, (err, data) => err ? next(err) : res.render('users/order', data))
   },
   postOrder: async (req, res, next) => {
-    orderService.postOrder(req, (err, data) => err ? next(err) : res.render('users/payment', data))
+    orderService.postOrder(req, (err, data) => err ? next(err) : res.render('users/confirmation', data))
   },
   getPayment: async (req, res, next) => {
     orderService.getPayment(req, (err, data) => err ? next(err) : res.render('users/payment', data))
