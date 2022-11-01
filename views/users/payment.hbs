@@ -1,6 +1,6 @@
 <h1>hello</h1>
 {{! action = API 網址 }}
-<form name="newebPay" action="/" method="POST">
+<form name="newebPay" action="{{tradeInfo.PayGateWay}}" method="POST">
 
   {{! 明碼參數 MID = MerchantID }}
   <input
