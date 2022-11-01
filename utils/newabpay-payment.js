@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const crypto = require('crypto')
 
 const URL = process.env.URL
@@ -30,6 +34,7 @@ function genDataChain (data) {
   for (const item of Object.entries(data)) {
     results.push(`${item[0]}=${item[1]}`)
   }
+  return results.join('&')
 }
 
 const newebpay = {
