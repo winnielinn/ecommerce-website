@@ -16,6 +16,9 @@ const orderController = {
   },
   getPayment: async (req, res, next) => {
     orderService.getPayment(req, (err, data) => err ? next(err) : res.render('users/payment', data))
+  },
+  newebpayCallback: async (req, res, next) => {
+    orderService.newebpayCallback(req, (err, data) => err ? next(err) : res.redirect('/orders', data))
   }
 }
 

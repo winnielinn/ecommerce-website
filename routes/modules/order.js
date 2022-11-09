@@ -8,6 +8,7 @@ const { authenticated } = require('../../middleware/auth')
 router.get('/:id/payment', orderController.getPayment)
 router.get('/:id', orderController.getOrder)
 router.get('/', orderController.getOrders)
+router.post('/newebpay/callback', orderController.newebpayCallback)
 router.post('/', authenticated, orderController.postOrder)
 
 module.exports = router

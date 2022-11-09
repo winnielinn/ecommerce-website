@@ -4,7 +4,7 @@ const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
 
-const { getTradeInfo, decryptTradeInfoAES } = require('../utils/newabpay-payment')
+const { getTradeInfo, decryptTradeInfoAES } = require('../utils/newebpay-payment')
 
 const orderService = {
   getOrders: async (req, callback) => {
@@ -92,13 +92,26 @@ const orderService = {
     }
   },
   getPayment: async (req, callback) => {
-    const id = req.params.id
-    const order = await Order.findByPk(id)
+    try {
+      const id = req.params.id
+      const order = await Order.findByPk(id)
 
-    if (!order) throw new Error('無法查找不存在的訂單。')
-    const tradeInfo = getTradeInfo(order.dataValues.totalAmount, 'Product Name', req.user.email)
+      if (!order) throw new Error('無法查找不存在的訂單。')
 
-    return callback(null, { order: order.toJSON(), tradeInfo })
+      const tradeInfo = getTradeInfo(order.dataValues.totalAmount, 'Product Name', req.user.email)
+
+      return callback(null, { order: order.toJSON(), tradeInfo })
+    } catch (err) {
+      callback(err)
+    }
+  },
+  newebpayCallback: async (req, callback) => {
+    try {
+      const decryptTradeInfo = JSON.parse(decryptTradeInfoAES(req.body.TradeInfo))
+      console.log('decryptTradeInfo', decryptTradeInfo)
+    } catch (err) {
+      callback(err)
+    }
   }
 }
 

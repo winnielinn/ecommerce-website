@@ -9,22 +9,26 @@ const MerchantID = process.env.MERCHANT_ID
 const HashKey = process.env.HASH_KEY
 const HashIV = process.env.HASH_IV
 
-const PayGateWay = 'http://ccore.newebpay.com/MPG/mpg_gateway'
-const ReturnURL = URL + '/newebpay/callback?from=ReturnURL'
-const NotifyURL = URL + 'newebpay/callback?from=NotifyURL'
+const PayGateWay = 'https://ccore.newebpay.com/MPG/mpg_gateway'
+const ReturnURL = URL + '/orders/newebpay/callback?from=ReturnURL'
+const NotifyURL = URL + '/orders/newebpay/callback?from=NotifyURL'
 const ClientBackURL = URL + '/orders'
 
 // 將交易參數字串和 HashKey + HashIV 進行 AES 加密得出 TradeInfo
 function enecryptTradeInfoAES (TradeInfo) {
   const encrypt = crypto.createCipheriv('aes256', HashKey, HashIV)
+  console.log('encrypt', encrypt)
   const encrypted = encrypt.update(genDataChain(TradeInfo), 'utf8', 'hex')
+  console.log('encrypted', encrypted)
   return encrypted + encrypt.final('hex')
 }
 
 // 將 TradeInfo 和 HashKey + HashIV 進行 SHA 加密得出 TradeSha
 function hashTradeInfoSHA (TradeInfo) {
   const sha = crypto.createHash('sha256')
+  console.log('sha', sha)
   const plainText = `HashKey=${HashKey}&${TradeInfo}&HashIV=${HashIV}`
+  console.log('plainText', plainText)
   return sha.update(plainText).digest('hex').toUpperCase()
 }
 
@@ -44,7 +48,7 @@ const newebpay = {
       MerchantID, // 商店代號
       TimeStamp: Date.now(), // 時間戳記
       Version: '2.0', // 串接版本
-      ResponseType: 'JSON', // 回傳格式
+      RespondType: 'JSON', // 回傳格式
       MerchantOrderNo: Math.floor(Date.now() / 1000), // 商店訂單編號
       Amt, // 訂單金額
       Email, // 付款人電子信箱
