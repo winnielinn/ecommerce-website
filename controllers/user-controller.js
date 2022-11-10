@@ -1,7 +1,3 @@
-const bcrypt = require('bcryptjs')
-
-const { User } = require('../models')
-const { getUser } = require('../helpers/auth-helper')
 
 const userService = require('../services/user-service')
 
@@ -34,11 +30,15 @@ const userController = {
     userService.getRegisterPage(req, (err, data) => err ? next(err) : res.render('register'))
   },
   register: async (req, res, next) => {
-    userService.register(req, (err, _data) => {
-      if (err) next(err)
-
-      req.flash('success_messages', '您已成功註冊一個帳號。')
-      return res.redirect('/users/login')
+    userService.register(req, (err, data) => {
+      if (err) {
+        res.redirect('/users/login')
+      } else {
+        req.login(data.registeredUser, () => {
+          req.flash('success_messages', '您已成功註冊一個帳號。')
+          res.redirect('/home')
+        })
+      }
     })
   },
   getSettingPage: async (req, res, next) => {
