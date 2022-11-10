@@ -17,18 +17,14 @@ const ClientBackURL = URL + '/orders'
 // 將交易參數字串和 HashKey + HashIV 進行 AES 加密得出 TradeInfo
 function enecryptTradeInfoAES (TradeInfo) {
   const encrypt = crypto.createCipheriv('aes256', HashKey, HashIV)
-  console.log('encrypt', encrypt)
   const encrypted = encrypt.update(genDataChain(TradeInfo), 'utf8', 'hex')
-  console.log('encrypted', encrypted)
   return encrypted + encrypt.final('hex')
 }
 
 // 將 TradeInfo 和 HashKey + HashIV 進行 SHA 加密得出 TradeSha
 function hashTradeInfoSHA (TradeInfo) {
   const sha = crypto.createHash('sha256')
-  console.log('sha', sha)
   const plainText = `HashKey=${HashKey}&${TradeInfo}&HashIV=${HashIV}`
-  console.log('plainText', plainText)
   return sha.update(plainText).digest('hex').toUpperCase()
 }
 
