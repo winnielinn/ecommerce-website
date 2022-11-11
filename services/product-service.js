@@ -1,4 +1,5 @@
 const { Category, Product } = require('../models')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const productService = {
   getHomePage: async (req, callback) => {
@@ -15,11 +16,20 @@ const productService = {
   },
   getAllProducts: async (req, callback) => {
     try {
+      const DEFAULT_LIMIT = 9
+
       const categoryId = Number(req.query.categoryId) || ''
+      const page = Number(req.query.page) || 1
+      const limit = Number(req.query.limit) || DEFAULT_LIMIT
+
+      const offset = getOffset(limit, page)
+      const category = true
 
       const [products, categories] = await Promise.all([
-        await Product.findAll({
+        await Product.findAndCountAll({
           included: Category,
+          limit,
+          offset,
           where: {
             ...categoryId ? { CategoryId: categoryId } : {}
           },
@@ -29,9 +39,7 @@ const productService = {
         Category.findAll({ raw: true })
       ])
 
-      const category = true
-
-      return callback(null, { products, categories, categoryId, category })
+      return callback(null, { products: products.rows, categories, categoryId, category, pagination: getPagination(limit, page, products.count) })
     } catch (err) {
       callback(err)
     }

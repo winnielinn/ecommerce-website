@@ -8,7 +8,8 @@ const adminService = {
       const products = await Product.findAll({
         include: [Category],
         nest: true,
-        raw: true
+        raw: true,
+        order: [['created_at', 'DESC']]
       })
 
       return callback(null, { products })
@@ -149,7 +150,8 @@ const adminService = {
   getOrdersPage: async (req, callback) => {
     try {
       const orders = await Order.findAll({
-        raw: true
+        raw: true,
+        order: [['created_at', 'DESC']]
       })
 
       return callback(null, { orders })

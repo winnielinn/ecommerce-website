@@ -9,7 +9,8 @@ const orderService = {
     try {
       let orders = await Order.findAll({
         where: { UserId: req.user.id },
-        raw: true
+        raw: true,
+        order: [['created_at', 'DESC']]
       })
 
       orders = orders.map(order => ({
