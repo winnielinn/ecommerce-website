@@ -10,6 +10,7 @@ const api = require('./modules/api')
 
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
+const orderController = require('../controllers/order-controller')
 
 router.use('/users', user)
 router.use('/cart', cart)
@@ -18,6 +19,7 @@ router.use('/admin', authenticated, authenticatedAdmin, admin)
 router.use('/orders', authenticated, order)
 router.use('/', home)
 
+router.post('/newebpay/callback', orderController.newebpayCallback)
 router.get('/', (req, res) => res.redirect('/home'))
 
 router.use('/', generalErrorHandler)

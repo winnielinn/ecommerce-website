@@ -10,8 +10,8 @@ const HashKey = process.env.HASH_KEY
 const HashIV = process.env.HASH_IV
 
 const PayGateWay = 'https://ccore.newebpay.com/MPG/mpg_gateway'
-const ReturnURL = URL + '/orders/newebpay/callback?from=ReturnURL'
-const NotifyURL = URL + '/orders/newebpay/callback?from=NotifyURL'
+const ReturnURL = URL + '/newebpay/callback?from=ReturnURL'
+const NotifyURL = URL + '/newebpay/callback?from=NotifyURL'
 const ClientBackURL = URL + '/orders'
 
 // 將交易參數字串和 HashKey + HashIV 進行 AES 加密得出 TradeInfo
@@ -38,20 +38,20 @@ function genDataChain (data) {
 }
 
 const newebpay = {
-  getTradeInfo: (Amt, Desc, Email) => {
+  getTradeInfo: (Amt, MerchantOrderNo, Email) => {
     // 這些是藍新在傳送參數時的必填欄位
     const data = {
       MerchantID, // 商店代號
       TimeStamp: Date.now(), // 時間戳記
       Version: '2.0', // 串接版本
       RespondType: 'JSON', // 回傳格式
-      MerchantOrderNo: Math.floor(Date.now() / 1000), // 商店訂單編號
+      MerchantOrderNo: `${Math.floor(Date.now() / 1000)}` + `${MerchantOrderNo}`, // 商店訂單編號
       Amt, // 訂單金額
       Email, // 付款人電子信箱
       NotifyURL, // 支付通知網址
       ReturnURL, // 支付完成返回商店網址
       ClientBackURL, // 返回商店網址
-      ItemDesc: Desc, // 商品資訊
+      ItemDesc: '農產品', // 商品資訊
       LoginType: 0, // 藍新金流會員
       OrderComment: '測試信用卡卡號請輸入 4000-2211-1111-1111，並請任意填寫有效年月及卡片背後末三碼。' // 商店備註
     }

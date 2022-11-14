@@ -98,7 +98,7 @@ const orderService = {
 
       if (!order) throw new Error('無法查找不存在的訂單。')
 
-      const tradeInfo = getTradeInfo(order.dataValues.totalAmount, 'Product Name', req.user.email)
+      const tradeInfo = getTradeInfo(order.dataValues.totalAmount, `${order.toJSON().id}`, req.user.email)
 
       return callback(null, { order: order.toJSON(), tradeInfo })
     } catch (err) {
@@ -108,8 +108,15 @@ const orderService = {
   newebpayCallback: async (req, callback) => {
     try {
       const decryptTradeInfo = JSON.parse(decryptTradeInfoAES(req.body.TradeInfo))
-      console.log('decryptTradeInfo', decryptTradeInfo)
+      const orderId = Number(decryptTradeInfo.Result.MerchantOrderNo.slice(10))
+      if (req.body.Status === 'SUCCESS') {
+        // 以 transaction 更新資料庫 payment 資訊
+        return callback(null, { orderId })
+      } else {
+        // 回傳錯誤資訊
+      }
     } catch (err) {
+      // rollback 回資料庫
       callback(err)
     }
   }
