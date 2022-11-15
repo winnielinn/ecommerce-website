@@ -40,7 +40,7 @@ const cartService = {
 
       return callback(null, { products, totalPrice })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   }
 }

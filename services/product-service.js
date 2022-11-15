@@ -10,7 +10,7 @@ const productService = {
 
       return callback(null, { categories, category })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getAllProducts: async (req, callback) => {
@@ -33,7 +33,7 @@ const productService = {
 
       return callback(null, { products, categories, categoryId, category })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getProduct: async (req, callback) => {
@@ -57,7 +57,7 @@ const productService = {
 
       return callback(null, { product, categories, categoryId, category })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   }
 }
