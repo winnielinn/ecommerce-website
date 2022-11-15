@@ -1,4 +1,4 @@
-const { Order, Product, OrderItem } = require('../models')
+const { Order, Product, OrderItem, sequelize } = require('../models')
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
@@ -21,7 +21,7 @@ const orderService = {
 
       return callback(null, { orders })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getOrder: async (req, callback) => {
@@ -45,7 +45,7 @@ const orderService = {
 
       return callback(null, { order, totalPrice })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   postOrder: async (req, callback) => {
@@ -88,7 +88,7 @@ const orderService = {
       }
       return callback(null, { order: newOrder })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getPayment: async (req, callback) => {
@@ -102,22 +102,31 @@ const orderService = {
 
       return callback(null, { order: order.toJSON(), tradeInfo })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   newebpayCallback: async (req, callback) => {
+    const t = await sequelize.transaction()
     try {
       const decryptTradeInfo = JSON.parse(decryptTradeInfoAES(req.body.TradeInfo))
       const orderId = Number(decryptTradeInfo.Result.MerchantOrderNo.slice(10))
       if (req.body.Status === 'SUCCESS') {
+        const status = 'SUCCESS'
         // 以 transaction 更新資料庫 payment 資訊
-        return callback(null, { orderId })
+        const order = await Order.findByPk(orderId)
+        await order.update({
+          paymentStatus: 'paid',
+          updatedAt: Date.now()
+        }, { transaction: t })
+        await t.commit()
+        return callback(null, { orderId, status })
       } else {
-        // 回傳錯誤資訊
+        return callback(null, { orderId })
       }
     } catch (err) {
       // rollback 回資料庫
-      callback(err)
+      await t.rollback()
+      return callback(err)
     }
   }
 }
