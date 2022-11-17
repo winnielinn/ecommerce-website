@@ -4,32 +4,38 @@
   // 將存放在 local storage 內的 id 拿出來
   const productIds = JSON.parse(localStorage.getItem('cartItem'))
 
-  // 設定總金額
-  let totalPrice = 0
-
-  // 以 axios 方式呼叫 api 並取得相對應 product_id 的 product
-  const response = await axios.get('/api/cartItems', {
-    params: {
-      productIds: productIds.toString()
-    }
-  })
-
-  const products = response.data
-
-  // 預設在購物車的數量為 1
-  // 進行總金額加總
-  for (let i = 0; i < products.length; i++) {
-    products[i].quantityInCart = 1
-    totalPrice += products[i].quantityInCart * products[i].price
-  }
-
-  // 將獲取的 product 資料動態渲染頁面
-  const cart = document.querySelector('.cart')
-
+  // 全域變數
   let rawHTML = ''
 
-  for (let i = 0; i < products.length; i++) {
-    rawHTML += `
+  if (productIds.length <= 0) {
+    rawHTML = '<p class="text-center fs-3">嗚嗚⋯⋯目前購物車空空如也⋯⋯</p>'
+    const cartPage = document.querySelector('.cartpage')
+    cartPage.innerHTML = rawHTML
+  } else {
+    // 設定總金額
+    let totalPrice = 0
+
+    // 以 axios 方式呼叫 api 並取得相對應 product_id 的 product
+    const response = await axios.get('/api/cartItems', {
+      params: {
+        productIds: productIds.toString()
+      }
+    })
+
+    const products = response.data
+
+    // 預設在購物車的數量為 1
+    // 進行總金額加總
+    for (let i = 0; i < products.length; i++) {
+      products[i].quantityInCart = 1
+      totalPrice += products[i].quantityInCart * products[i].price
+    }
+
+    // 將獲取的 product 資料動態渲染頁面
+    const cart = document.querySelector('.cart')
+
+    for (let i = 0; i < products.length; i++) {
+      rawHTML += `
     <tr>
       <td><img src="${products[i].image}" alt="產品照片"
         width="150px"
@@ -55,10 +61,10 @@
       <input type="hidden" class="productQuantityInCart${products[i].id}" name="productQuantityInCart" value="${products[i].quantityInCart}" />
     </tr>
     `
-  }
+    }
 
-  // 將計算的總金額塞回頁面
-  rawHTML += `
+    // 將計算的總金額塞回頁面
+    rawHTML += `
     <tr>
       <td></td>
       <td></td>
@@ -74,5 +80,6 @@
     </tr>
   `
 
-  cart.innerHTML = rawHTML
+    cart.innerHTML = rawHTML
+  }
 })()
