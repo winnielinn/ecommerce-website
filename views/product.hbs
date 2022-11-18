@@ -9,6 +9,7 @@
     <hr>
     <p class="product-weight text-muted mt-4">重量：{{product.weight}}</p>
     <p class="product-description" style="white-space: break-spaces;">{{product.description}}</p>
+    <p class="product-id" hidden>{{product.id}}</p>
 
     {{#if product.quantity}}
     <div class="btn-group mt-3">
@@ -21,3 +22,5 @@
 </div>
 
 <script src="/javascripts/addCart.js"></script>
+<script src="/javascripts/cartButton.js"></script>
+ 

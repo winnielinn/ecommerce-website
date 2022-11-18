@@ -3,12 +3,12 @@ const button = document.querySelector('.add-cart')
 function addToCart (event) {
   const list = JSON.parse(localStorage.getItem('cartItem')) || []
 
-  if (list.some(item => item === event.target.dataset.id)) {
-    return alert('該商品已在購物車中。')
-  }
-
-  list.push(event.target.dataset.id)
+  list.push({ productId: event.target.dataset.id, productQuantity: 1 })
   localStorage.setItem('cartItem', JSON.stringify(list))
+
+  const productButton = document.querySelector('.btn-group')
+  const rawHtml = '<button type="submit" class="btn btn-outline-secondary" disabled>已加入購物車</button>'
+  productButton.innerHTML = rawHtml
 }
 
 button.addEventListener('click', addToCart)

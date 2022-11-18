@@ -33,6 +33,15 @@ async function dataPanelControl (event) {
 
     // 修改傳回後端的值
     document.querySelector(`.productQuantityInCart${productId}`).value = quantityChanged
+
+    // 修改傳入 localStorage 的值
+    const list = JSON.parse(localStorage.getItem('cartItem'))
+    for (const item of list) {
+      if (item.productId === productId) {
+        item.productQuantity = quantityChanged
+      }
+    }
+    localStorage.setItem('cartItem', JSON.stringify(list))
   } else if (target.matches('.remove-product')) {
     // localStorageq 刪除
     const productIds = JSON.parse(localStorage.getItem('cartItem'))

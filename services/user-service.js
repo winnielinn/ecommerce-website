@@ -36,13 +36,13 @@ const userService = {
       const rawUser = await User.findOne({ where: { email } })
       if (rawUser) throw new Error('該使用者已經註冊過！')
 
-      const user = await User.create({
+      const registeredUser = await User.create({
         name,
         email,
         password: await bcrypt.hashSync(password, bcrypt.genSaltSync(10))
       })
 
-      return callback(null, { user })
+      return callback(null, { registeredUser })
     } catch (err) {
       return callback(err)
     }
