@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="order-confirm-title text-center mt-3">
+    <h1>訂單 #{{order.id}} 付款頁面</h1>
+  </div>
+  <div
+    class="order-confirm-body d-flex flex-column align-items-center m-4"
+    style="background: #ffdcdf;border-radius: 8px;"
+  >
+    <ul class="order-confirm-detail list-group mt-5 mb-3 px-3">
+      <li class="list-group-item">訂單編號： {{order.id}}</li>
+      <li class="list-group-item">總金額： $ {{order.totalAmount}}</li>
+      <li class="list-group-item">配送住址： {{order.address}}</li>
+    </ul>
+    {{! action = API 網址 }}
+    <form name="newebPay" action="{{tradeInfo.PayGateWay}}" method="POST">
+
+      {{! 明碼參數 MID = MerchantID }}
+      <input
+        type="text"
+        name="MerchantID"
+        value="{{tradeInfo.MerchantID}}"
+        hidden
+      />
+
+      {{! 加密後參數 TradeInfo }}
+      <input
+        type="text"
+        name="TradeInfo"
+        value="{{tradeInfo.TradeInfo}}"
+        hidden
+      />
+
+      {{! 壓碼參數 TradeSha }}
+      <input
+        type="text"
+        name="TradeSha"
+        value="{{tradeInfo.TradeSha}}"
+        hidden
+      />
+
+      {{! 版本 Version}}
+      <input type="text" name="Version" value="{{tradeInfo.Version}}" hidden />
+
+      <a href="/products" class="btn btn-outline-danger my-3 me-2">返回首頁</a>
+      <button type="submit" class="btn btn-danger my-3">確定付款</button>
+    </form>
+  </div>
+</div>

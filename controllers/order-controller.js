@@ -12,7 +12,13 @@ const orderController = {
     orderService.getOrder(req, (err, data) => err ? next(err) : res.render('users/order', data))
   },
   postOrder: async (req, res, next) => {
-    orderService.postOrder(req, (err, data) => err ? next(err) : res.render('users/finish-order', data))
+    orderService.postOrder(req, (err, data) => err ? next(err) : res.render('users/confirmation', data))
+  },
+  getPayment: async (req, res, next) => {
+    orderService.getPayment(req, (err, data) => err ? next(err) : res.render('users/payment', data))
+  },
+  newebpayCallback: async (req, res, next) => {
+    orderService.newebpayCallback(req, (err, data) => err ? next(err) : res.render('users/payment-result', data))
   }
 }
 

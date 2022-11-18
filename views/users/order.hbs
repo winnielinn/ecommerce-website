@@ -11,20 +11,23 @@
     </thead>
     <tbody>
       {{#each order.orderedProducts}}
-      <tr>
-        <td><img src="{{this.image}}" alt="產品照片" 
-          width="150px"
-          height="100px"
-          style="transition: opacity 0.5s; opacity:0;"
-          onload="this.style.opacity=1;"></td>
-        <td>
-          <p>{{this.name}}</p>
-          <p  class="text-muted">重量：{{this.weight}}</p>
-        </td>
-        <td>{{this.price}}</td>
-        <td>{{this.OrderItem.quantity}}</td>
-        <td>$ {{this.price}} * {{this.OrderItem.quantity}}</td>
-      </tr>
+        <tr>
+          <td><img
+              src="{{this.image}}"
+              alt="產品照片"
+              width="150px"
+              height="100px"
+              style="transition: opacity 0.5s; opacity:0;"
+              onload="this.style.opacity=1;"
+            /></td>
+          <td>
+            <p>{{this.name}}</p>
+            <p class="text-muted">重量：{{this.weight}}</p>
+          </td>
+          <td>{{this.price}}</td>
+          <td>{{this.OrderItem.quantity}}</td>
+          <td>$ {{this.price}} * {{this.OrderItem.quantity}}</td>
+        </tr>
       {{/each}}
       <tr>
         <td></td>
@@ -39,6 +42,14 @@
       </tr>
     </tbody>
   </table>
-  <a class="btn btn-outline-secondary" href="javascript:history.back()">返回上一頁</a>
+  <div class="button-container d-flex justify-content-between mt-5">
+    <a
+      class="btn btn-outline-secondary"
+      href="javascript:history.back()"
+    >返回上一頁</a>
+    {{#ifCond order.paymentStatus "unpaid"}}
+      <a class="btn btn-danger" href="/orders/{{order.id}}/payment">前往付款</a>
+    {{/ifCond}}
+  </div>
 
 </div>

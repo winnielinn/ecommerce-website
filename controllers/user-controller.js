@@ -1,4 +1,3 @@
-
 const userService = require('../services/user-service')
 
 const userController = {

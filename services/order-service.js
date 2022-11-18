@@ -1,8 +1,10 @@
-const { Order, Product, OrderItem } = require('../models')
+const { Order, Product, OrderItem, sequelize } = require('../models')
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
+
+const { getTradeInfo, decryptTradeInfoAES } = require('../utils/newebpay-payment')
 
 const orderService = {
   getOrders: async (req, callback) => {
@@ -20,7 +22,7 @@ const orderService = {
 
       return callback(null, { orders })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getOrder: async (req, callback) => {
@@ -44,7 +46,7 @@ const orderService = {
 
       return callback(null, { order, totalPrice })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   postOrder: async (req, callback) => {
@@ -87,7 +89,45 @@ const orderService = {
       }
       return callback(null, { order: newOrder })
     } catch (err) {
-      callback(err)
+      return callback(err)
+    }
+  },
+  getPayment: async (req, callback) => {
+    try {
+      const id = req.params.id
+      const order = await Order.findByPk(id)
+
+      if (!order) throw new Error('無法查找不存在的訂單。')
+
+      const tradeInfo = getTradeInfo(order.dataValues.totalAmount, `${order.toJSON().id}`, req.user.email)
+
+      return callback(null, { order: order.toJSON(), tradeInfo })
+    } catch (err) {
+      return callback(err)
+    }
+  },
+  newebpayCallback: async (req, callback) => {
+    const t = await sequelize.transaction()
+    try {
+      const decryptTradeInfo = JSON.parse(decryptTradeInfoAES(req.body.TradeInfo))
+      const orderId = Number(decryptTradeInfo.Result.MerchantOrderNo.slice(10))
+      if (req.body.Status === 'SUCCESS') {
+        const status = 'SUCCESS'
+        // 以 transaction 更新資料庫 payment 資訊
+        const order = await Order.findByPk(orderId)
+        await order.update({
+          paymentStatus: 'paid',
+          updatedAt: Date.now()
+        }, { transaction: t })
+        await t.commit()
+        return callback(null, { orderId, status })
+      } else {
+        return callback(null, { orderId })
+      }
+    } catch (err) {
+      // rollback 回資料庫
+      await t.rollback()
+      return callback(err)
     }
   }
 }
