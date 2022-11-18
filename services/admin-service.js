@@ -14,7 +14,7 @@ const adminService = {
 
       return callback(null, { products })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getProductPage: async (req, callback) => {
@@ -29,7 +29,7 @@ const adminService = {
       product = product.get({ plain: true })
       return callback(null, { product })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getCreatePage: async (req, callback) => {
@@ -40,7 +40,7 @@ const adminService = {
       })
       return callback(null, { categories })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   postProduct: async (req, callback) => {
@@ -64,7 +64,7 @@ const adminService = {
 
       return callback(null)
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getEditPage: async (req, callback) => {
@@ -85,7 +85,7 @@ const adminService = {
       product = product.get({ plain: true })
       return callback(null, { product, categories })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   editProduct: async (req, callback) => {
@@ -115,7 +115,7 @@ const adminService = {
 
       return callback(null)
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   deleteProduct: async (req, callback) => {
@@ -130,7 +130,7 @@ const adminService = {
       if (!product) throw new Error('無法刪除不存在的商品。')
       return callback(null)
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getUsersPage: async (req, callback) => {
@@ -144,7 +144,7 @@ const adminService = {
       })
       return callback(null, { users })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getOrdersPage: async (req, callback) => {
@@ -156,7 +156,7 @@ const adminService = {
 
       return callback(null, { orders })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   cancelOrder: async (req, callback) => {
@@ -194,7 +194,7 @@ const adminService = {
 
       return callback(null)
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getOrderPage: async (req, callback) => {
@@ -218,7 +218,7 @@ const adminService = {
 
       return callback(null, { order, totalPrice })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   putOrder: async (req, callback) => {
@@ -237,7 +237,7 @@ const adminService = {
 
       return callback(null, { order })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   }
 }

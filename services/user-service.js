@@ -8,21 +8,21 @@ const userService = {
     try {
       return callback(null)
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   login: async (req, callback) => {
     try {
       return callback(null)
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getRegisterPage: async (req, callback) => {
     try {
       return callback(null)
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   register: async (req, callback) => {
@@ -44,14 +44,14 @@ const userService = {
 
       return callback(null, { user })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   getSettingPage: async (req, callback) => {
     try {
       return callback(null)
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   putSetting: async (req, callback) => {
@@ -76,9 +76,9 @@ const userService = {
         email
       })
 
-      return callback(null, {updatedUser })
+      return callback(null, { updatedUser })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   }
 }

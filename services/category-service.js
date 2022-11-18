@@ -11,7 +11,7 @@ const categoryService = {
 
       return callback(null, { categories, editCategory })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   postCategory: async (req, callback) => {
@@ -28,7 +28,7 @@ const categoryService = {
 
       return callback(null, { name })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   putCategory: async (req, callback) => {
@@ -44,7 +44,7 @@ const categoryService = {
 
       return callback(null, { name })
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   },
   deleteCategory: async (req, callback) => {
@@ -60,7 +60,7 @@ const categoryService = {
 
       return callback(null)
     } catch (err) {
-      callback(err)
+      return callback(err)
     }
   }
 }
