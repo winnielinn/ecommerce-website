@@ -1,4 +1,4 @@
-const { Order, Product, OrderItem, sequelize } = require('../models')
+const { Order, Product, OrderItem, User, sequelize } = require('../models')
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
@@ -88,6 +88,13 @@ const orderService = {
           updatedAt: Date.now()
         })
       }
+
+      // 更新訂購次數
+      const user = await User.findByPk(UserId)
+      await user.update({
+        orderTimes: ++user.orderTimes
+      })
+
       return callback(null, { order: newOrder })
     } catch (err) {
       return callback(err)
