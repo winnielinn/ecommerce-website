@@ -5,7 +5,7 @@
   const products = JSON.parse(localStorage.getItem('cartItem'))
   let rawHTML = ''
 
-  if (products.length <= 0 || products === 'null') {
+  if (products === null || products.length <= 0) {
     rawHTML = '<p class="text-center fs-3">嗚嗚⋯⋯目前購物車空空如也⋯⋯</p>'
     const cartPage = document.querySelector('.cartpage')
     cartPage.innerHTML = rawHTML
