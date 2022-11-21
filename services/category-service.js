@@ -40,7 +40,7 @@ const categoryService = {
       const category = await Category.findByPk(id)
       if (!category) throw new Error('無法修改不存在的分類。')
 
-      await category.update({ name })
+      await category.update({ name, updatedAt: Date.now() })
 
       return callback(null, { name })
     } catch (err) {

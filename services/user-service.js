@@ -73,7 +73,8 @@ const userService = {
 
       const updatedUser = await user.update({
         name,
-        email
+        email,
+        updatedAt: Date.now()
       })
 
       return callback(null, { updatedUser })

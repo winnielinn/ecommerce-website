@@ -2,15 +2,24 @@ const { Product, Category, User, Order, OrderItem } = require('../models')
 
 const { imgurFileHandler } = require('../helpers/file-helper')
 
+const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc')
+dayjs.extend(utc)
+
 const adminService = {
   getAllProducts: async (req, callback) => {
     try {
-      const products = await Product.findAll({
+      let products = await Product.findAll({
         include: [Category],
         nest: true,
         raw: true,
-        order: [['created_at', 'DESC']]
+        order: [['updated_at', 'DESC']]
       })
+
+      products = products.map(product => ({
+        ...product,
+        date: dayjs.utc(product.updatedAt).local().format('YYYY/MM/DD HH:mm:ss')
+      }))
 
       return callback(null, { products })
     } catch (err) {
@@ -110,7 +119,8 @@ const adminService = {
         weight,
         quantity,
         image: filePath || product.image,
-        description
+        description,
+        updatedAt: Date.now()
       })
 
       return callback(null)
@@ -149,10 +159,15 @@ const adminService = {
   },
   getOrdersPage: async (req, callback) => {
     try {
-      const orders = await Order.findAll({
+      let orders = await Order.findAll({
         raw: true,
-        order: [['created_at', 'DESC']]
+        order: [['updated_at', 'DESC']]
       })
+
+      orders = orders.map(order => ({
+        ...order,
+        date: dayjs.utc(order.createdAt).local().format('YYYY/MM/DD HH:mm:ss')
+      }))
 
       return callback(null, { orders })
     } catch (err) {
@@ -178,7 +193,8 @@ const adminService = {
       // 更新訂單狀態
       await order.update({
         paymentStatus: 'cancelled',
-        shippingStatus: 'cancelled'
+        shippingStatus: 'cancelled',
+        updatedAt: Date.now()
       })
 
       // 把原先的數量補回 Table Product
@@ -188,7 +204,8 @@ const adminService = {
         const product = await Product.findByPk(orderItems[i].Product_id)
         const quantity = orderItems[i].quantity
         await product.update({
-          quantity: product.quantity += quantity
+          quantity: product.quantity += quantity,
+          updatedAt: Date.now()
         })
       }
 
@@ -232,7 +249,8 @@ const adminService = {
 
       await order.update({
         paymentStatus: payment || order.paymentStatus,
-        shippingStatus: shipment || order.shippingStatus
+        shippingStatus: shipment || order.shippingStatus,
+        updatedAt: Date.now()
       })
 
       return callback(null, { order })
