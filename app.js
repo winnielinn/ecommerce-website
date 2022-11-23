@@ -38,8 +38,7 @@ app.use(session({
   saveUninitialized: false
 }))
 
-app.use(passport.initialize())
-app.use(passport.session())
+passport(app)
 
 // flash 提示訊息
 app.use(flash())

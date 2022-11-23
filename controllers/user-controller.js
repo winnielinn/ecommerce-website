@@ -20,7 +20,7 @@ const userController = {
         return res.redirect('/home')
       })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   },
   getRegisterPage: async (req, res, next) => {
@@ -29,7 +29,7 @@ const userController = {
   register: async (req, res, next) => {
     userService.register(req, (err, data) => {
       if (err) {
-        res.redirect('/users/login')
+        return next(err)
       } else {
         req.login(data.registeredUser, () => {
           req.flash('success_messages', '您已成功註冊一個帳號。')
