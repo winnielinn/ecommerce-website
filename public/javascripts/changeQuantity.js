@@ -20,12 +20,14 @@ async function dataPanelControl (event) {
     // 判斷點擊的目標為加減或刪除
     if (target.matches('.add-product-quantity')) {
       const quantity = quantityChanged < product.quantity ? ++quantityChanged : quantityChanged = product.quantity
+      const price = product.price * quantity
 
-      target.parentElement.nextElementSibling.children[0].innerText = `${product.price} * ${quantity}`
+      target.parentElement.nextElementSibling.children[0].innerText = `$ ${price}`
     } else {
       const quantity = quantityChanged <= 1 ? 1 : --quantityChanged
+      const price = product.price * quantity
 
-      target.parentElement.nextElementSibling.children[0].innerText = `${product.price} * ${quantity}`
+      target.parentElement.nextElementSibling.children[0].innerText = `$ ${price}`
     }
 
     // 將產品數量改變

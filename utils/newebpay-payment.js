@@ -53,7 +53,7 @@ const newebpay = {
       ClientBackURL, // 返回商店網址
       ItemDesc: '農產品', // 商品資訊
       LoginType: 0, // 藍新金流會員
-      OrderComment: '測試信用卡卡號請輸入 4000-2211-1111-1111，並請任意填寫有效年月及卡片背後末三碼。' // 商店備註
+      OrderComment: '4000-2211-1111-1111 為測試卡號，並請任意填寫有效年月及卡片背後末三碼。' // 商店備註
     }
 
     const result = {

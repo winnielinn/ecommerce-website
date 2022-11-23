@@ -5,7 +5,7 @@
   const products = JSON.parse(localStorage.getItem('cartItem'))
   let rawHTML = ''
 
-  if (products.length <= 0 || products === 'null') {
+  if (products === null || products.length <= 0) {
     rawHTML = '<p class="text-center fs-3">嗚嗚⋯⋯目前購物車空空如也⋯⋯</p>'
     const cartPage = document.querySelector('.cartpage')
     cartPage.innerHTML = rawHTML
@@ -26,6 +26,9 @@
       // 進行總金額加總
       totalPrice += Number(product[0].price) * Number(item.productQuantity)
 
+      // 單筆產品運算
+      const price = Number(product[0].price) * Number(item.productQuantity)
+
       // 將獲取的 product 資料動態渲染頁面
       rawHTML += `
         <tr>
@@ -36,7 +39,7 @@
             onload="this.style.opacity=1;"></td>
           <td>${product[0].name}</td>
           <td>
-            <span class="price">${product[0].price}</span>
+            <span>$ </span><span class="price">${product[0].price}</span>
           </td>
           <td>
             <a class="btn btn-sm btn-outline-secondary add-product-quantity" data-id="${product[0].id}">+</a>
@@ -44,7 +47,7 @@
             <a class="btn btn-sm btn-outline-secondary reduce-product-quantity" data-id="${product[0].id}">-</a>
           </td>
           <td>
-            <span class="prodcut-price-multiply-quantity">${product[0].price} * ${Number(item.productQuantity)}</span>
+            <span class="prodcut-price-multiply-quantity">$ ${price}</span>
           </td>
           <td>
             <i class="fa-solid fa-trash-can remove-product"></i>

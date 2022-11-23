@@ -1,4 +1,4 @@
-const { Order, Product, OrderItem, sequelize } = require('../models')
+const { Order, Product, OrderItem, User, sequelize } = require('../models')
 
 const dayjs = require('dayjs')
 const utc = require('dayjs/plugin/utc')
@@ -17,7 +17,7 @@ const orderService = {
 
       orders = orders.map(order => ({
         ...order,
-        date: dayjs.utc(order.createdAt).format('YYYY/MM/DD HH:mm:ss')
+        date: dayjs.utc(order.createdAt).local().format('YYYY/MM/DD HH:mm:ss')
       }))
 
       return callback(null, { orders })
@@ -84,9 +84,17 @@ const orderService = {
 
         const product = await Product.findByPk(productId[i])
         await product.update({
-          quantity: product.quantity -= quantityInCart[i]
+          quantity: product.quantity -= quantityInCart[i],
+          updatedAt: Date.now()
         })
       }
+
+      // 更新訂購次數
+      const user = await User.findByPk(UserId)
+      await user.update({
+        orderTimes: ++user.orderTimes
+      })
+
       return callback(null, { order: newOrder })
     } catch (err) {
       return callback(err)

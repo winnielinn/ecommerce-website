@@ -6,7 +6,7 @@ const userController = {
   },
   login: async (req, res, next) => {
     userService.login(req, (err, data) => {
-      if (err) next(err)
+      if (err) return next(err)
 
       req.flash('success_messages', '您已成功登入！')
       return res.redirect('/home')
@@ -15,9 +15,7 @@ const userController = {
   logout: async (req, res, next) => {
     try {
       req.logout(function (err) {
-        if (err) {
-          next(err)
-        }
+        if (err) return next(err)
         req.flash('success_messages', '您已成功登出！')
         return res.redirect('/home')
       })
@@ -45,7 +43,7 @@ const userController = {
   },
   putSetting: async (req, res, next) => {
     userService.putSetting(req, (err, _data) => {
-      if (err) next(err)
+      if (err) return next(err)
 
       req.flash('success_messages', '已成功修改個人資料。')
       return res.redirect('/users/setting')

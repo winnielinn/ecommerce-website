@@ -13,7 +13,8 @@
         <th scope="col">商品名稱</th>
         <th scope="col">商品分類</th>
         <th scope="col">庫存數量</th>
-        <th scope="col">更多動作</th>
+        <th scope="col">最後更新時間</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
         <td>{{this.name}}</td>
         <td>{{this.Category.name}}</td>
         <td>{{this.quantity}}</td>
+        <td>{{this.date}}</td>
         <td>
           <a class="btn btn-link link-primary text-decoration-none" href="/admin/products/{{this.id}}">
               <i class="fa-solid fa-circle-info"></i> 詳細資訊</a>

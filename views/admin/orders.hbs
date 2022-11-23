@@ -10,7 +10,8 @@
         <th scope="col">總金額</th>
         <th scope="col">付款狀態</th>
         <th scope="col">運送狀態</th>
-        <th scope="col">更多動作</th>
+        <th scope="col">最後更新時間</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
           {{#ifCond this.shippingStatus 'processing' }} 處理中 {{/ifCond}}
           {{#ifCond this.shippingStatus 'cancelled' }} 已取消 {{/ifCond}}
         </td>
+        <td>{{this.date}}</td>
         <td>
           <a class="btn btn-link link-success text-decoration-none" href="/admin/orders/{{this.id}}">
               <i class="fas fa-edit"></i> 編輯狀態</a>

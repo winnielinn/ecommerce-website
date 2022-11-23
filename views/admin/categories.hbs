@@ -31,7 +31,7 @@
       <tr class="table-secondary">
         <th scope="col">編號</th>
         <th scope="col">分類名稱</th>
-        <th scope="col">更多動作</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -40,7 +40,6 @@
         <td>{{this.id}}</td>
         <td>{{this.name}}</td>
         <td>
-
           <a class="btn btn-link link-success text-decoration-none" href="/admin/categories/{{this.id}}">
               <i class="fas fa-edit"></i> 編輯分類</a>
         <form action="/admin/categories/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
