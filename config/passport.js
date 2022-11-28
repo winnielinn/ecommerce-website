@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const FacebookStrategy = require('passport-facebook')
+const GoogleStrategy = require('passport-google-oauth20')
 const bcrypt = require('bcryptjs')
 
 const { User } = require('../models')
@@ -50,6 +51,29 @@ module.exports = app => {
       return done(err, false)
     }
   }))
+
+  // Google 認證
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK
+  }, async function (_accessToken, _refreshToken, profile, done) {
+    try {
+      const { name, email } = profile._json
+      const user = await User.findOne({ where: { email } })
+      if (user) return done(null, user)
+      const randomPassword = Math.random().toString(36).slice(-8)
+      const registeredUser = await User.create({
+        name,
+        email,
+        password: await bcrypt.hashSync(randomPassword, bcrypt.genSaltSync(10))
+      })
+      return done(null, registeredUser)
+    } catch (err) {
+      return done(err, false)
+    }
+  }
+  ))
 
   // 序列化和反序列化
   passport.serializeUser(function (user, done) {
