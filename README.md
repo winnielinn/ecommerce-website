@@ -2,6 +2,8 @@
 
 An ecommerce website where customers get to buy fresh agricultural products from Yunlin famous for agriculture in Taiwan.
 
+![GITHUB](https://github.com/winnielinn/ecommerce-website/blob/main/public/photos/cover.png "cover")
+
 🚀 The platform is deployed now on Heroku.
 
 Click [this link](https://secure-wildwood-16800.herokuapp.com) to login enjoy all features through following accounts & passwords! 😃
