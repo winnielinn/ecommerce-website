@@ -7,7 +7,7 @@
 
   if (products === null || products.length <= 0) {
     rawHTML = `<img class="rounded mx-auto d-block mb-5" style="width: 20%;" src="https://store.sony.com.tw/resource/images/icon/cart_null.png">
-    <p class="text-center fs-3">你的購物車目前沒有任何商品喔</p>
+    <p class="text-center fs-3">你的購物車目前沒有任何商品喔！</p>
     <div class="d-grid gap-2 col-2 mx-auto">
       <a href="/products" class="btn btn-outline-secondary btn-block mt-2" style="background-color: #FF7575; border-color:#FF7575; color:white;">來去逛逛</a>
     </div>

@@ -1,63 +1,104 @@
-<div class="m-5">
-  <table class="table">
-    <thead>
-      <tr>
-        <th class="table-secondary" scope="col">訂單編號</th>
-        <th class="table-secondary" scope="col">訂單日期</th>
-        <th class="table-secondary" scope="col">總金額</th>
-        <th class="table-secondary" scope="col">付款狀態</th>
-        <th class="table-secondary" scope="col">出貨狀態</th>
-        <th class="table-secondary" scope="col">訂單狀態</th>
-        <th class="table-secondary" scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each orders}}
-      <tr>
-        <td>{{this.id}}</td>
-        <td>{{this.date}}</td>
-        <td>{{this.totalAmount}}</td>
-        <td>  
-          {{#ifCond this.paymentStatus 'paid' }} 已付款 {{/ifCond}}
-          {{#ifCond this.paymentStatus 'unpaid' }} 尚未付款 {{/ifCond}}
-          {{#ifCond this.paymentStatus 'cancelled' }} 已取消 {{/ifCond}}
-        </td>
-        <td>
-          {{#ifCond this.shippingStatus 'shipped' }} 已配送 {{/ifCond}}
-          {{#ifCond this.shippingStatus 'processing' }} 處理中 {{/ifCond}}
-          {{#ifCond this.shippingStatus 'cancelled' }} 已取消 {{/ifCond}}
-        </td>
-        <td>
-          {{#ifCond this.shippingStatus 'cancelled'}}
-            取消
-          {{/ifCond}}
-          {{#ifCond this.shippingStatus 'processing' }}  
-          <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#cancelOrder">
-            訂單取消
-          </button>
+{{#if orders}}
+  <div class="m-5">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="table-secondary" scope="col">訂單編號</th>
+          <th class="table-secondary" scope="col">訂單日期</th>
+          <th class="table-secondary" scope="col">總金額</th>
+          <th class="table-secondary" scope="col">付款狀態</th>
+          <th class="table-secondary" scope="col">出貨狀態</th>
+          <th class="table-secondary" scope="col">訂單狀態</th>
+          <th class="table-secondary" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orders}}
+          <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.date}}</td>
+            <td>{{this.totalAmount}}</td>
+            <td>
+              {{#ifCond this.paymentStatus "paid"}} 已付款 {{/ifCond}}
+              {{#ifCond this.paymentStatus "unpaid"}} 尚未付款 {{/ifCond}}
+              {{#ifCond this.paymentStatus "cancelled"}} 已取消 {{/ifCond}}
+            </td>
+            <td>
+              {{#ifCond this.shippingStatus "shipped"}} 已配送 {{/ifCond}}
+              {{#ifCond this.shippingStatus "processing"}} 處理中 {{/ifCond}}
+              {{#ifCond this.shippingStatus "cancelled"}} 已取消 {{/ifCond}}
+            </td>
+            <td>
+              {{#ifCond this.shippingStatus "cancelled"}}
+                取消
+              {{/ifCond}}
+              {{#ifCond this.shippingStatus "processing"}}
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#cancelOrder"
+                >
+                  訂單取消
+                </button>
 
-          <div class="modal fade" id="cancelOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">訂單取消</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div
+                  class="modal fade"
+                  id="cancelOrder"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5
+                          class="modal-title"
+                          id="exampleModalLabel"
+                        >訂單取消</h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        請透過 Line 或 IG 聯繫客服後辦理訂單取消。
+                        <p
+                          class="fw-bold"
+                          style="color: red"
+                        >注意：若商品已出貨則無法辦理。</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >關閉</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="modal-body">
-                  請透過 Line 或 IG 聯繫客服後辦理訂單取消。
-                  <p class="fw-bold" style="color: red">注意：若商品已出貨則無法辦理。</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          {{/ifCond}}
-        </td>
-        <td><a class="btn btn-primary" href="/orders/{{this.id}}" role="button">查看訂單</a></td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+              {{/ifCond}}
+            </td>
+            <td><a
+                class="btn btn-primary"
+                href="/orders/{{this.id}}"
+                role="button"
+              >查看訂單</a></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{else}}
+  <p class="text-center fs-3 mt-3">沒有任何訂單！</p>
+  <img
+    class="rounded mx-auto d-block m-5"
+    style="width: 20%;"
+    src="https://www.teasoap.com.tw/wp-content/uploads/2018/03/10aec35353f9c4096a71c38654c3d402-1.png"
+  />
+  <div class="d-grid gap-2 col-2 mx-auto">
+  </div>
+{{/if}}
