@@ -9,6 +9,9 @@ const productController = {
   },
   getProduct: async (req, res, next) => {
     productService.getProduct(req, (err, data) => err ? next(err) : res.render('product', data))
+  },
+  searchProducts: async (req, res, next) => {
+    productService.searchProducts(req, (err, data) => err ? next(err) : res.render('products', data))
   }
 }
 

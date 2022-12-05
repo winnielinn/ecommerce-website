@@ -82,21 +82,17 @@
               {{/each}}
         </div>
         <div class="col-4 mt-4">
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="搜尋商品" aria-label="Search">
-            <button class="btn btn-outline-danger" type="submit">Search</button>
+          <form class="d-flex" action="/search" >
+            <input class="form-control me-2" type="text" placeholder="商品名稱" aria-label="Search" name="searchWords" value="{{ searchWords }}">
+            <button class="btn btn-outline-danger" type="submit"><i class="fas fa-search"></i></button>
           </form>
         </div>
       </nav>
-
       {{/if}}
-
-
     </header>
     
     {{> messages}}
     {{{ body }}}  
-
 
     <footer>
       <div class="inner-footer p-5" style="border-top: 1px solid #6c757d;">

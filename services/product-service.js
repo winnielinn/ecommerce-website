@@ -1,3 +1,4 @@
+const { Op } = require('sequelize')
 const { Category, Product } = require('../models')
 const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
@@ -64,6 +65,34 @@ const productService = {
       const category = true
 
       return callback(null, { product, categories, categoryId, category })
+    } catch (err) {
+      return callback(err)
+    }
+  },
+  searchProducts: async (req, callback) => {
+    try {
+      const DEFAULT_LIMIT = 9
+      const page = Number(req.query.page) || 1
+      const limit = Number(req.query.limit) || DEFAULT_LIMIT
+
+      const searchWords = req.query.searchWords.replace(/\s+/g, '')
+      const offset = getOffset(limit, page)
+      const category = true
+
+      const [products, categories] = await Promise.all([
+        Product.findAndCountAll({
+          offset,
+          limit,
+          where: {
+            name: {
+              [Op.substring]: searchWords
+            }
+          },
+          raw: true
+        }),
+        Category.findAll({ raw: true })
+      ])
+      return callback(null, { products: products.rows, categories, category, searchWords, pagination: getPagination(limit, page, products.count) })
     } catch (err) {
       return callback(err)
     }
