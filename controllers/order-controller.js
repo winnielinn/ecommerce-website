@@ -19,6 +19,9 @@ const orderController = {
   },
   newebpayCallback: async (req, res, next) => {
     orderService.newebpayCallback(req, (err, data) => err ? next(err) : res.render('users/payment-result', data))
+  },
+  buyProductsDirectly: async (req, res, next) => {
+    orderService.buyProductsDirectly(req, (err, data) => err ? next(err) : res.render('users/checkout', data))
   }
 }
 

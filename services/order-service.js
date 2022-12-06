@@ -137,6 +137,20 @@ const orderService = {
       await t.rollback()
       return callback(err)
     }
+  },
+  buyProductsDirectly: async (req, callback) => {
+    try {
+      const products = []
+      const id = req.body.productId
+      const rawProducts = await Product.findByPk(id)
+      const product = rawProducts.get({ plain: true })
+      product.quantityInCart = 1
+      products.push(product)
+      const totalPrice = product.quantityInCart * product.price
+      return callback(null, { products, totalPrice })
+    } catch (err) {
+      return callback(err)
+    }
   }
 }
 
