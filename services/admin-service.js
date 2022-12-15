@@ -159,9 +159,11 @@ const adminService = {
   },
   getOrdersPage: async (req, callback) => {
     try {
+      const searchWords = req.query.searchWords
       let orders = await Order.findAll({
         raw: true,
-        order: [['updated_at', 'DESC']]
+        order: [['updated_at', 'DESC']],
+        where: searchWords ? { id: parseInt(req.query.searchWords) } : {}
       })
 
       orders = orders.map(order => ({
@@ -169,7 +171,7 @@ const adminService = {
         date: dayjs.utc(order.createdAt).local().format('YYYY/MM/DD HH:mm:ss')
       }))
 
-      return callback(null, { orders })
+      return callback(null, { orders, searchWords })
     } catch (err) {
       return callback(err)
     }
