@@ -1,6 +1,5 @@
 <div class="m-5">
 {{> admin-tabs route='categories'}}
-
 {{#if editCategory}}
   <div class="d-flex align-items-center pb-5 text-white-50 bg-purple">
     <form class="row" action="/admin/categories/{{editCategory.id}}?_method=PUT" method="POST">

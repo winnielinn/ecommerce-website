@@ -12,4 +12,12 @@
   <li class="nav-item">
     <a class="nav-link {{#ifCond route 'orders'}} active {{/ifCond}} panel-item" href="/admin/orders">訂單清單</a>
   </li>
+  {{#ifCond route 'orders'}}
+  <div class="m-3 nav justify-content-end">
+    <form class="d-flex" action="/admin/orders">
+      <input class="form-control me-2" type="text" placeholder="訂單編號搜尋" aria-label="Search" name="searchWords" value="{{ searchWords }}">
+      <button class="btn btn-outline-danger" type="submit"><i class="fas fa-search"></i></button>
+    </form>
+  </div>
+  {{/ifCond}}
 </ul>
