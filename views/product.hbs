@@ -1,26 +1,51 @@
 <div class="row m-5">
   <div class="col-md-6">
-    <img class="img-responsive center-block mb-5 d-flex" src="{{product.image}}" style="width: 100%; transition: opacity 0.5s; opacity:0;" onload="this.style.opacity=1;"/>
+    <img
+      class="img-responsive center-block mb-5 d-flex"
+      src="{{product.image}}"
+      style="width: 100%; transition: opacity 0.5s; opacity:0;"
+      onload="this.style.opacity=1;"
+    />
   </div>
 
   <div class="col-md-6">
-    <h1 class="product-title">{{product.name}}</h1> 
+    <h1 class="product-title">{{product.name}}</h1>
     <p class="product-price" style="color: #FF5151;">$ {{product.price}}</p>
-    <hr>
+    <hr />
     <p class="product-weight text-muted mt-4">重量：{{product.weight}}</p>
-    <p class="product-description" style="white-space: break-spaces;">{{product.description}}</p>
+    <p
+      class="product-description"
+      style="white-space: break-spaces;"
+    >{{product.description}}</p>
     <p class="product-id" hidden>{{product.id}}</p>
 
     {{#if product.quantity}}
-    <div class="btn-group mt-3">
-      <button type="submit" class="btn btn-outline-secondary add-cart" data-id="{{product.id}}">加入購物車</button>
-    </div>
+      <div class="btn-group mt-3">
+        <div class="d-flex">
+          <button
+            type="submit"
+            class="btn btn-outline-secondary add-cart me-3"
+            data-id="{{product.id}}"
+          >加入購物車</button>
+          <form action="/orders/directlybuy" method="POST">
+          <input type="hidden" name="productId" value="{{product.id}}">
+            <button
+              type="submit"
+              class="btn btn-outline-success"
+            >直接購買</button>
+          </form>
+        </div>
+
+      </div>
     {{else}}
-    <button type="button" class="btn btn-outline-secondary btn-lg" disabled>已售完</button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-lg"
+        disabled
+      >已售完</button>
     {{/if}}
   </div>
 </div>
 
 <script src="/javascripts/addCart.js"></script>
 <script src="/javascripts/cartButton.js"></script>
- 
