@@ -13,50 +13,92 @@
     </thead>
     <tbody>
       {{#each orders}}
-      <tr>
-        <td>{{this.id}}</td>
-        <td>{{this.date}}</td>
-        <td>{{this.totalAmount}}</td>
-        <td>  
-          {{#ifCond this.paymentStatus 'paid' }} 已付款 {{/ifCond}}
-          {{#ifCond this.paymentStatus 'unpaid' }} 尚未付款 {{/ifCond}}
-          {{#ifCond this.paymentStatus 'cancelled' }} 已取消 {{/ifCond}}
-        </td>
-        <td>
-          {{#ifCond this.shippingStatus 'shipped' }} 已配送 {{/ifCond}}
-          {{#ifCond this.shippingStatus 'processing' }} 處理中 {{/ifCond}}
-          {{#ifCond this.shippingStatus 'cancelled' }} 已取消 {{/ifCond}}
-        </td>
-        <td>
-          {{#ifCond this.shippingStatus 'cancelled'}}
-            取消
-          {{/ifCond}}
-          {{#ifCond this.shippingStatus 'processing' }}  
-          <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#cancelOrder">
-            訂單取消
-          </button>
+        <tr>
+          <td>{{this.id}}</td>
+          <td>{{this.date}}</td>
+          <td>{{this.totalAmount}}</td>
+          <td>
+            {{#ifCond this.paymentStatus "paid"}}
+              <p class="paid">已付款</p>
+            {{/ifCond}}
+            {{#ifCond this.paymentStatus "unpaid"}}
+              <p class="unpaid">尚未付款</p>
+            {{/ifCond}}
+            {{#ifCond this.paymentStatus "cancelled"}}
+              <p class="cancelled">已取消</p>
+            {{/ifCond}}
+          </td>
+          <td>
+            {{#ifCond this.shippingStatus "shipped"}}
+              <p class="shipped">已配送</p>
+            {{/ifCond}}
+            {{#ifCond this.shippingStatus "processing"}}
+              <p class="processing">處理中</p>
+            {{/ifCond}}
+            {{#ifCond this.shippingStatus "cancelled"}}
+              <p class="cancelled">已取消</p>
+            {{/ifCond}}
+          </td>
+          <td>
+            {{#ifCond this.shippingStatus "cancelled"}}
+              取消
+            {{/ifCond}}
+            {{#ifCond this.shippingStatus "processing"}}
+              <button
+                type="button"
+                class="btn btn-outline-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#cancelOrder"
+              >
+                訂單取消
+              </button>
 
-          <div class="modal fade" id="cancelOrder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">訂單取消</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  請透過 Line 或 IG 聯繫客服後辦理訂單取消。
-                  <p class="fw-bold" style="color: red">注意：若商品已出貨則無法辦理。</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+              <div
+                class="modal fade"
+                id="cancelOrder"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5
+                        class="modal-title"
+                        id="exampleModalLabel"
+                      >訂單取消</h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      請透過 Line 或 IG 聯繫客服後辦理訂單取消。
+                      <p
+                        class="fw-bold"
+                        style="color: red"
+                      >注意：若商品已出貨則無法辦理。</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >關閉</button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          {{/ifCond}}
-        </td>
-        <td><a class="btn btn-primary" href="/orders/{{this.id}}" role="button">查看訂單</a></td>
-      </tr>
+            {{/ifCond}}
+          </td>
+          <td><a
+              class="btn btn-primary"
+              href="/orders/{{this.id}}"
+              role="button"
+            >查看訂單</a></td>
+        </tr>
       {{/each}}
     </tbody>
   </table>
