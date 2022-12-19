@@ -2,10 +2,10 @@ const userService = require('../services/user-service')
 
 const userController = {
   getLoginPage: async (req, res, next) => {
-    userService.getLoginPage(req, (err, data) => err ? next(err) : res.render('login'))
+    userService.getLoginPage(req, (err, _data) => err ? next(err) : res.render('login'))
   },
   login: async (req, res, next) => {
-    userService.login(req, (err, data) => {
+    userService.login(req, (err, _data) => {
       if (err) return next(err)
 
       req.flash('success_messages', '您已成功登入！')
@@ -24,7 +24,7 @@ const userController = {
     }
   },
   getRegisterPage: async (req, res, next) => {
-    userService.getRegisterPage(req, (err, data) => err ? next(err) : res.render('register'))
+    userService.getRegisterPage(req, (err, _data) => err ? next(err) : res.render('register'))
   },
   register: async (req, res, next) => {
     userService.register(req, (err, data) => {
@@ -39,7 +39,7 @@ const userController = {
     })
   },
   getSettingPage: async (req, res, next) => {
-    userService.getSettingPage(req, (err, data) => err ? next(err) : res.render('users/setting'))
+    userService.getSettingPage(req, (err, _data) => err ? next(err) : res.render('users/setting'))
   },
   putSetting: async (req, res, next) => {
     userService.putSetting(req, (err, _data) => {
@@ -48,6 +48,9 @@ const userController = {
       req.flash('success_messages', '已成功修改個人資料。')
       return res.redirect('/users/setting')
     })
+  },
+  getEmailPage: async (req, res, next) => {
+    userService.getEmailPage(req, (err, _data) => err ? next(err) : res.render('users/email-check'))
   }
 }
 

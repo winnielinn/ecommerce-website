@@ -81,6 +81,13 @@ const userService = {
     } catch (err) {
       return callback(err)
     }
+  },
+  getEmailPage: async (req, callback) => {
+    try {
+      return callback(null)
+    } catch (err) {
+      return callback(err)
+    }
   }
 }
 
