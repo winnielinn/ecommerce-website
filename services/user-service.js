@@ -88,6 +88,17 @@ const userService = {
     } catch (err) {
       return callback(err)
     }
+  },
+  forgetPassword: async (req, callback) => {
+    try {
+      const { email } = req.body
+      console.log(email)
+      const rawUser = await User.findOne({ where: { email } })
+      if (!rawUser) throw new Error(`此電子信箱 ${email} 並未註冊過，請重新輸入。`)
+      return callback(null, { email })
+    } catch (err) {
+      return callback(err)
+    }
   }
 }
 

@@ -12,6 +12,7 @@ router.get('/email', userController.getEmailPage)
 router.get('/logout', authenticated, userController.logout)
 router.get('/setting', authenticated, userController.getSettingPage)
 router.post('/register', userController.register)
+router.post('/forgetPassword', userController.forgetPassword)
 router.post('/login', passport.authenticate('local', { failureRedirect: '/users/login', failureFlash: true }), userController.login)
 router.put('/setting/user', authenticated, userController.putSetting)
 

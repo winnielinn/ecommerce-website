@@ -51,6 +51,9 @@ const userController = {
   },
   getEmailPage: async (req, res, next) => {
     userService.getEmailPage(req, (err, _data) => err ? next(err) : res.render('users/email-check'))
+  },
+  forgetPassword: async (req, res, next) => {
+    userService.forgetPassword(req, (err, data) => err ? next(err) : res.render('users/send-email', data))
   }
 }
 
