@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 
 const { User } = require('../models')
 const { getUser } = require('../helpers/auth-helper')
+const nodeMailer = require('../utils/nodemailer')
 
 const userService = {
   getLoginPage: async (req, callback) => {
@@ -92,10 +93,17 @@ const userService = {
   forgetPassword: async (req, callback) => {
     try {
       const { email } = req.body
-      console.log(email)
+      if (!email) throw new Error('不可輸入空的電子信箱。')
+
       const rawUser = await User.findOne({ where: { email } })
       if (!rawUser) throw new Error(`此電子信箱 ${email} 並未註冊過，請重新輸入。`)
-      return callback(null, { email })
+
+      const user = rawUser.get({ plain: true })
+      const verifyCode = Math.random().toString(36).slice(-8)
+
+      await nodeMailer(user, email, verifyCode)
+
+      return callback(null, { email, verifyCode })
     } catch (err) {
       return callback(err)
     }
