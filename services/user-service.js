@@ -107,6 +107,28 @@ const userService = {
     } catch (err) {
       return callback(err)
     }
+  },
+  resetPassword: async (req, callback) => {
+    try {
+      const { email, verifyCode, isVerifyCode, newPassword, confirmPassword } = req.body
+      console.log(email, verifyCode, isVerifyCode, newPassword, confirmPassword)
+      if (!email || !isVerifyCode || !verifyCode || !newPassword || !confirmPassword) throw new Error('所有欄位都必須填寫，請重新獲取驗證碼。')
+
+      if (verifyCode !== isVerifyCode) throw new Error('驗證碼輸入錯誤，請重新獲取驗證碼。')
+
+      if (newPassword !== confirmPassword) throw new Error('輸入的兩次密碼不相符，請重新獲取驗證碼。')
+
+      const user = await User.findOne({ where: { email } })
+      if (!user) throw new Error('使用者不存在，請輸入正確的電子信箱並重新獲取驗證碼。')
+
+      const hash = await bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10))
+      await user.update({
+        password: hash
+      })
+      return callback(null)
+    } catch (err) {
+      return callback(err)
+    }
   }
 }
 

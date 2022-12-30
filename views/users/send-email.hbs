@@ -4,13 +4,14 @@
     <div class="container d-flex justify-content-center">
       <div class="card" style="width: 35rem;height: 40rem;">
         <div class="card-body p-5">
-          <h4
-            class="text-center mt-2"
-          >已成功寄送一組驗證碼到你的信箱！</h4>
-          <p class="text-center mb-5 mt-3 fst-italic" style="color: #0080FF;">請繼續填寫以下資訊來完成重設密碼。</p>
+          <h4 class="text-center mt-2">已成功寄送一組驗證碼到你的信箱！</h4>
+          <p
+            class="text-center mb-5 mt-3 fst-italic"
+            style="color: #0080FF;"
+          >請繼續填寫以下資訊來完成重設密碼。</p>
           <form
             class="user-login-form"
-            action="/users/forgetPassword"
+            action="/users/resetPassword"
             method="POST"
           >
             <div class="form-row m-3">
@@ -46,7 +47,12 @@
                   />
                 </div>
               </div>
-              <input type="hidden" name="isVerifyCode" value="{{verifyCode}}">
+              <input
+                type="hidden"
+                name="isVerifyCode"
+                value="{{verifyCode}}"
+                required
+              />
               <div class="mb-5 row">
                 <label for="newPassword" class="col-sm-4 col-form-label">New
                   Password</label>
@@ -54,7 +60,7 @@
                   <input
                     class="form-control"
                     id="newPassword"
-                    type="text"
+                    type="password"
                     name="newPassword"
                     class="form-control"
                     placeholder="新密碼"
@@ -63,13 +69,15 @@
                 </div>
               </div>
               <div class="mb-5 row">
-                <label for="confirmPassword" class="col-sm-4 col-form-label">Confirm
-                  Password</label>
+                <label
+                  for="confirmPassword"
+                  class="col-sm-4 col-form-label"
+                >Confirm Password</label>
                 <div class="col-sm-8">
                   <input
                     class="form-control"
                     id="confirmPassword"
-                    type="text"
+                    type="password"
                     name="confirmPassword"
                     class="form-control"
                     placeholder="確認新密碼"

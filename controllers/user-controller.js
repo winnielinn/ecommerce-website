@@ -54,6 +54,16 @@ const userController = {
   },
   forgetPassword: async (req, res, next) => {
     userService.forgetPassword(req, (err, data) => err ? next(err) : res.render('users/send-email', data))
+  },
+  resetPassword: async (req, res, _next) => {
+    userService.resetPassword(req, (err, data) => {
+      if (err) {
+        req.flash('error_messages', `${err}`)
+        return res.redirect('/users/email')
+      }
+      req.flash('success_messages', '您已成功更改密碼！')
+      return res.redirect('/users/login')
+    })
   }
 }
 
