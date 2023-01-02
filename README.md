@@ -22,9 +22,13 @@ Login
 
 * Login via Facebook or Google, or locally.
 
+* Reset password when forgetting password.
+
 Browse products
 
 * Browse all agricultural products, based on categories or pages.
+
+* Search specific products by using search bar.
 
 Edit Personal Settings 🔐 (Logged-in ONLY)
 
@@ -61,6 +65,8 @@ Manage products and categories
 Mange customers and orders
 
 * Browse a list of customers and orders.
+
+* Search specific order by using search bar.
 
 * Update payment and shipping status.
 
@@ -119,6 +125,9 @@ FACEBOOK_CALLBACK=
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 GOOGLE_CALLBACK=
+
+NODEMAILER_USER=
+NODEMAILER_PASS=
 ```
 
 ❗To complete `.env`, you'll need to apply above information through following websites:
