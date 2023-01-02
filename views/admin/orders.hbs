@@ -20,14 +20,14 @@
         <td>{{this.UserId}}</td>
         <td>{{this.totalAmount}}</td>
         <td>  
-          {{#ifCond this.paymentStatus 'paid' }} 已付款 {{/ifCond}}
-          {{#ifCond this.paymentStatus 'unpaid' }} 尚未付款 {{/ifCond}}
-          {{#ifCond this.paymentStatus 'cancelled' }} 已取消 {{/ifCond}}
+          {{#ifCond this.paymentStatus 'paid' }} <p class="paid">已付款</p> {{/ifCond}}
+          {{#ifCond this.paymentStatus 'unpaid' }} <p class="unpaid">尚未付款</p>  {{/ifCond}}
+          {{#ifCond this.paymentStatus 'cancelled' }} <p class="cancelled">已取消</p> {{/ifCond}}
         </td>
         <td>
-          {{#ifCond this.shippingStatus 'shipped' }} 已配送 {{/ifCond}}
-          {{#ifCond this.shippingStatus 'processing' }} 處理中 {{/ifCond}}
-          {{#ifCond this.shippingStatus 'cancelled' }} 已取消 {{/ifCond}}
+          {{#ifCond this.shippingStatus 'shipped' }} <p class="shipped">已配送</p> {{/ifCond}}
+          {{#ifCond this.shippingStatus 'processing' }} <p class="processing">處理中</p>  {{/ifCond}}
+          {{#ifCond this.shippingStatus 'cancelled' }} <p class="cancelled">已取消</p> {{/ifCond}}
         </td>
         <td>{{this.date}}</td>
         <td>

@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 
 const { User } = require('../models')
 const { getUser } = require('../helpers/auth-helper')
+const nodeMailer = require('../utils/nodemailer')
 
 const userService = {
   getLoginPage: async (req, callback) => {
@@ -78,6 +79,53 @@ const userService = {
       })
 
       return callback(null, { updatedUser })
+    } catch (err) {
+      return callback(err)
+    }
+  },
+  getEmailPage: async (req, callback) => {
+    try {
+      return callback(null)
+    } catch (err) {
+      return callback(err)
+    }
+  },
+  forgetPassword: async (req, callback) => {
+    try {
+      const { email } = req.body
+      if (!email) throw new Error('不可輸入空的電子信箱。')
+
+      const rawUser = await User.findOne({ where: { email } })
+      if (!rawUser) throw new Error(`此電子信箱 ${email} 並未註冊過，請重新輸入。`)
+
+      const user = rawUser.get({ plain: true })
+      const verifyCode = Math.random().toString(36).slice(-8)
+
+      await nodeMailer(user, email, verifyCode)
+
+      return callback(null, { email, verifyCode })
+    } catch (err) {
+      return callback(err)
+    }
+  },
+  resetPassword: async (req, callback) => {
+    try {
+      const { email, verifyCode, isVerifyCode, newPassword, confirmPassword } = req.body
+      console.log(email, verifyCode, isVerifyCode, newPassword, confirmPassword)
+      if (!email || !isVerifyCode || !verifyCode || !newPassword || !confirmPassword) throw new Error('所有欄位都必須填寫，請重新獲取驗證碼。')
+
+      if (verifyCode !== isVerifyCode) throw new Error('驗證碼輸入錯誤，請重新獲取驗證碼。')
+
+      if (newPassword !== confirmPassword) throw new Error('輸入的兩次密碼不相符，請重新獲取驗證碼。')
+
+      const user = await User.findOne({ where: { email } })
+      if (!user) throw new Error('使用者不存在，請輸入正確的電子信箱並重新獲取驗證碼。')
+
+      const hash = await bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10))
+      await user.update({
+        password: hash
+      })
+      return callback(null)
     } catch (err) {
       return callback(err)
     }

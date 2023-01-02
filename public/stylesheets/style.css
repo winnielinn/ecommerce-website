@@ -35,6 +35,20 @@ h1 {
   font-size: 25px;
 }
 
+/* Orders */
+.cancelled {
+  color: #D26900;
+}
+
+.unpaid {
+  color: #EA0000;
+}
+
+.processing {
+  color: #0072E3;
+}
+
+
 /* Footer */
 footer a {
   color: #BC8A8A;
