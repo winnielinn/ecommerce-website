@@ -8,6 +8,8 @@ const cartService = {
     try {
       let { productId, productQuantityInCart } = req.body
 
+      if (!productId || !productQuantityInCart) throw new Error('空的購物車無法結帳。')
+
       if (!productId) return
 
       const productIdArray = []
